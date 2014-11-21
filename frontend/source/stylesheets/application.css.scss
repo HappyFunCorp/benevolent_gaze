@@ -1,0 +1,231 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+$tape: rgb(253, 246, 225);
+$sky_blue: rgb(150, 219, 242);
+$dark_blue: rgb(30, 37, 35);
+$canary_yellow: rgb(252, 223, 69);
+$light_sky_blue: rgb(211, 236, 245);
+
+// @import "compass/reset";
+@import "bootstrap";
+
+body {
+  overflow: hidden;
+}
+
+.board {
+  background-image: url( "/images/board@1x.png" );
+  min-width: 800px;
+  min-height: 1080px;
+}
+
+.sky {
+  background-image: url( "/images/sky@1x.png" );
+  width: 800px;
+  height: 1080px;
+  position: relative;
+}
+
+.left_column {
+  min-width: 800px;
+  min-height: 1080px;
+}
+
+.right_column {
+  min-width: 1120px;
+  min-height: 1080px;
+}
+
+.logo {
+  position: absolute;
+  top: 100px;
+  right: 0;
+  left: 0;
+}
+
+.welcomes {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  right: 0;
+}
+
+.newcomer {
+  position: absolute;
+  width: 100%;
+  top: 600px;
+  display: none;
+}
+
+.newcomer_avatar {
+  position: absolute;
+  top: 325px;
+  width: 100%;
+  display: none;
+  z-index: 100;
+  img {
+    margin: 0 auto;
+  }
+}
+
+.sun {
+  position: absolute;
+  top: 370px;
+  left: 0;
+  right: 0;
+}
+
+.town {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+} 
+
+.wifi {
+  position: absolute;
+  bottom: 0;
+  height: 80px;
+  h3 {
+    position: relative;
+    &::before {
+      content: "";
+      height: 39px;
+      width: 39px;
+      position: absolute;
+      top: -5px;
+      left: -45px;
+    }
+  }
+  .uname::before {
+    background: url( "/images/icon_wifi@1x.png" );
+  }
+  .pword::before {
+    background: url( "/images/icon_password@1x.png" );
+    height: 38px;
+  }
+}
+
+.pin_and_avatar_container {
+  position: relative;
+}
+
+.pin_rope {
+  //background: url( "/images/pin_rope@1x.png" );
+  width: 70%;
+  background-repeat: no-repeat;
+  position: relative;
+  left: 22%;
+  top: -5px;
+  margin-bottom: -35px;
+}
+
+.worker {
+  padding-top: 25px;
+  position: relative;
+}
+
+.avatar_container {
+  width: 80%;
+  position: relative;
+  margin: 0 auto;
+
+  img {
+    border: 5px solid $tape;
+    -webkit-box-shadow: 0px 0px 5px 2px #333; /* Android 2.3+, iOS 4.0.2-4.2, Safari 3-4 */
+    box-shadow: 0px 0px 5px 2px #333;
+  }
+}
+
+.tape {
+  background: $tape;
+  position: relative;
+  display: inline-block;
+  height: 67px;
+  font-size: 20px;
+  line-height: 67px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  &::before, &::after {
+    content: "";
+    position: absolute;
+    background-repeat: no-repeat;
+  }
+  &::after {
+    background: url( "/images/tape_right@1x.png" );
+    top: 0;
+    right: -8px;
+    width: 9px;
+    height: 67px;
+  }
+  &::before {
+    background: url( "/images/tape_left@1x.png" );
+    top: 0;
+    left: -5px;
+    width: 5px;
+    height: 67px;
+  }
+}
+
+//6 or less
+.board.large .worker {
+  @extend .col-sm-4;
+  .pin_rope {
+    left: 30% !important;
+  }
+}
+//12 or less
+.board.med .worker {
+  @extend .col-sm-3;
+}
+//24 or less
+.board.small .worker {
+  @extend .col-sm-2;
+  .tape {
+    font-size: 14px;
+  }
+  .pin_rope {
+    left: 20px !important;
+  }
+}
+//25 or more
+.board.xsmall .worker {
+  @extend .col-sm-1
+}
+
+//For register page.
+body {
+  background: $light_sky_blue;
+  background-image: url('/images/sky_register@1x.png');
+  background-repeat: repeat-x;
+  background-position: center;
+}
+
+.logo_register {
+  margin-top: 50px;
+}
+
+.register ul li a {
+  margin: 5px 0;
+  line-height: 40px;
+  height: 40px;
+  color: $dark_blue;
+  cursor: pointer;
+  &::before, &::after {
+    height: 40px;
+  }
+}
+
+.hfc_sticker img {
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.register_container img {
+  max-width: 300px;
+  margin: 10px auto;
+}
+  
