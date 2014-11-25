@@ -4,30 +4,17 @@
 
 $(function() {
 var es = new EventSource('/feed');
-var arrivals = [];
-var departures = [];
-var changes = true;
+var new_people = [];
+var current_people = [];
 
 es.onmessage = function(e) {
-  console.log( "Got message", e )
+  //console.log( "Got message", e )
 }
 
 es.addEventListener('message', function(e) {
-  console.log(e.data);
-  parsed_data = JSON.parse(e.data)
-
-  if (parsed_data.name_update == true) {
-
-    rename_users(parsed_data.user_names);
-
-  } else {
-
-    changes = parsed_data.changes;
-    arrivals = parsed_data.arrivals
-    departures = parsed_data.departures;
-    add_people();
-
-  }
+  new_people = JSON.parse(e.data)
+  rename_users(new_people);
+  add_remove_workers(new_people);
 }, false);
 
 es.addEventListener('open', function(e) {
@@ -77,42 +64,69 @@ var Worker = {
           }
 }
 
-var add_people = function() {
-  if ( changes == true ) {
-    if (arrivals.length > 0 ) {
-      arrivals.map(function(a){
-        Worker.grab_worker();
-        Worker.set_name(a.name);
-        Worker.add_class(a.ip.replace(/\./g, ""));
-        Worker.add_to_board();
-        $('.newcomer h3').text(a.name);
-        $('.newcomer_avatar, .newcomer').show().removeClass('animated').removeClass('bounceOutUp').addClass('animated bounceInDown');
-        $('.newcomer_avatar, .newcomer').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e) {
-          $(this).removeClass('bounceInDown').addClass('bounceOutUp');
-          Worker.redraw();
-        })
-      });
+var add_remove_workers = function(w){
+  w.map(function(worker_data){
+    console.log(worker_data)
+    var klass = worker_data.device_name.replace(/\./g, "");
+    if($("."+klass).length > 0) {
+      console.log("nobody new");
+    } else {
       Welcome.move_logo_and_welcomes();
+      current_people.push(worker_data);
+      Worker.grab_worker();
+      Worker.set_name(worker_data.name || sanitize_name(worker_data.device_name));
+      Worker.add_class("."+klass);
+      Worker.add_to_board();
+      $('.newcomer h3').text(worker_data.name || sanitize_name(worker_data.device_name));
+      $('.newcomer_avatar, .newcomer').show().removeClass('animated').removeClass('bounceOutUp').addClass('animated bounceInDown');
+      $('.newcomer_avatar, .newcomer').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e) {
+        $(this).removeClass('bounceInDown').addClass('bounceOutUp');
+        Worker.redraw();
+      })
     }
-    if (departures.length > 0 ) {
-      departures.map(function(d){
-        var klass = "." + d.ip.replace(/\./g, "");
-        console.log("this is the class" + klass);
-        Worker.remove_worker(klass);        
-        $('.bounceOutDown').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e) {
-          $(this).remove();
-          Worker.redraw();
-        });
-        //$(klass).remove();
-        console.log("in departures");
+  });
+  
+  current_people = current_people.filter(function(worker){
+    var last_seen_plus_five_mins = parseInt(worker.last_seen) + 150000;
+
+    if (last_seen_plus_five_mins <= $.now()) {
+      var klass = worker.device_name.replace(/\./g, "");
+      Worker.remove_worker("."+klass);        
+      $('.bounceOutDown').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e) {
+        $(this).remove();
+        Worker.redraw();
       });
-    }
-  }
-}
+      console.log("in departures");
+    };
+    return !(last_seen_plus_five_mins <= $.now());
+  });
+  
+  current_people = current_people.map(function(cp){
+    updated_person = cp;
+     new_people.map(function(np){
+       if (cp.device_name == np.device_name) {
+         updated_person = np;
+       }
+     });
+     return updated_person;
+  });
+  console.log(current_people);
+  console.log("currentfolks");
+};
+
+var sanitize_name = function(name){
+  var name_change = name.replace(/(s\-).*/, "");
+      name_change = name_change.replace(/\-.*/, "");
+      name_change = name_change.replace(/siP.*/, "");
+      name_change = name_change.replace(/iM.*/, "");
+      return name_change
+};
 
 var rename_users = function(user_names) {
   user_names.map(function(u){
-    $('.'+u.ip.replace(/\./g, "")).children('.tape').text(u.name);
+    var name_klass = u.device_name.replace(/\./g, "");
+    u = u.name || sanitize_name(u.device_name);
+    $("."+name_klass).children('.tape').text(u);
   });
 }
 
