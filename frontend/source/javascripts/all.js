@@ -66,7 +66,6 @@ var Worker = {
 
 var add_remove_workers = function(w){
   w.map(function(worker_data){
-    console.log(worker_data)
     var klass = worker_data.device_name.replace(/\./g, "");
     if($("."+klass).length > 0) {
       console.log("nobody new");
@@ -96,7 +95,6 @@ var add_remove_workers = function(w){
         $(this).remove();
         Worker.redraw();
       });
-      console.log("in departures");
     };
     return !(last_seen_plus_five_mins <= $.now());
   });
@@ -110,8 +108,6 @@ var add_remove_workers = function(w){
      });
      return updated_person;
   });
-  console.log(current_people);
-  console.log("currentfolks");
 };
 
 var sanitize_name = function(name){
@@ -125,8 +121,22 @@ var sanitize_name = function(name){
 var rename_users = function(user_names) {
   user_names.map(function(u){
     var name_klass = u.device_name.replace(/\./g, "");
-    u = u.name || sanitize_name(u.device_name);
-    $("."+name_klass).children('.tape').text(u);
+    var $el = $('.'+name_klass);
+    u_name = u.name || sanitize_name(u.device_name);
+    $el.children('.tape').text(u_name);
+    console.log(u);
+    console.log("We are in rename users.");
+    console.log(u.device_name);
+    if ( typeof u.avatar == "string" ) {
+      console.log("inside if");
+      if ($el.hasClass("rotate90")) {
+        console.log('already rotated');
+      } else if ( u.device_name.match(/iPh/).length > 0 ) {
+        $el.find(".avatar_container img").addClass('rotate90');
+      }
+      $el.find(".avatar_container img").attr('src', (u.avatar || "/images/visitor_art@1x.png"));
+    }
+
   });
 }
 

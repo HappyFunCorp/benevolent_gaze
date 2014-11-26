@@ -5,6 +5,7 @@ require 'sinatra/json'
 require 'redis'
 require 'resolv'
 require 'sinatra/cross_origin'
+require 'aws/s3'
 
 Encoding.default_external = 'utf-8'  if defined?(::Encoding)
 
@@ -16,6 +17,30 @@ module BenevolentGaze
     set :public_folder, File.expand_path( "../../../frontend/build", __FILE__ )
     
     register Sinatra::CrossOrigin
+
+    helpers do
+      def upload(filename, file, device_name)
+        doomsday = Time.mktime(2038, 1, 18).to_i
+        if (filename)
+          new_file_name = device_name.to_s + filename
+          bucket = ENV['AWS_CDN_BUCKET']
+          AWS::S3::Base.establish_connection!(
+            :access_key_id     => ENV['AWS_ACCESS_KEY_ID'],
+            :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+          )
+          AWS::S3::S3Object.store(
+            new_file_name,
+            open(file.path),
+            bucket,
+            :access => :public_read
+          )
+          image_url = AWS::S3::S3Object.url_for( new_file_name, bucket, :expires => doomsday )
+          return image_url 
+        else
+          return nil
+        end
+      end
+    end
 
     get "/" do
       redirect "index.html"
@@ -29,7 +54,15 @@ module BenevolentGaze
       devices[device_name] = params[:real_name]
       r.set("all_devices", devices.to_json)
       puts params[:real_name].to_s + " just added their real name."
+      puts params
+      image_url_returned_from_upload_function = upload(params[:fileToUpload][:filename], params[:fileToUpload][:tempfile], device_name)
+      devices_with_images = r.get("devices_images") || "{}" 
+      parsed_devices_with_images = JSON.parse(devices_with_images)
+      parsed_devices_with_images[device_name] = image_url_returned_from_upload_function
+      r.set("devices_images", parsed_devices_with_images.to_json)
       puts r.get("all_devices")
+      puts r.get("devices_images")
+      puts r.get("devices_on_network")
       redirect "thanks.html"
     end
 
@@ -40,17 +73,17 @@ module BenevolentGaze
     get "/feed", provides: 'text/event-stream' do
       cross_origin
       r = Redis.new
-      
+  
       stream :keep_open do |out|
         loop do 
           if out.closed?
             break
           end
           data = JSON.parse(r.get("devices_on_network")).map do |k,v|
-            { device_name: k, name: v, last_seen: Time.now.to_f * 1000 }
+            { device_name: k, name: v, last_seen: Time.now.to_f * 1000, avatar: JSON.parse(r.get("devices_images") || "{}" )[k] } 
           end
+  
           out << "data: #{data.to_json}\n\n"
-
           sleep 1
         end
       end

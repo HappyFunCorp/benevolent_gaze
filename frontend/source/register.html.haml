@@ -6,9 +6,15 @@
       =image_tag "/images/register@2x.png", class: "img-responsive"
     %br
     .col-md-4.col-md-offset-4
-      %form{action: '/register', method: 'POST'}
+      %form{action: '/register', method: 'POST', enctype: 'multipart/form-data'}
+        .form-group
+          %label#fileToUpload{for: "fileToUpload"}
+            Take a photo!
+          %input#fileToUpload{name: "fileToUpload", type: "file", id: "fileToUpload", accept: "image/*", capture: "camera"}
+
         .form-group
           %label= "Let's give your device a name!"
           %input.form-control{type: "text", name: "real_name"}
             %input.device_id_for_form{type: "hidden", name: "device_name"}
         %button.btn.btn-default{type: "submit"} SAY MAY NAME!
+  
