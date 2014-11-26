@@ -12219,22 +12219,20 @@ var rename_users = function(user_names) {
     var $el = $('.'+name_klass);
     u_name = u.name || sanitize_name(u.device_name);
     $el.children('.tape').text(u_name);
-    console.log(u);
-    console.log("We are in rename users.");
-    console.log(u.device_name);
-    if ( typeof u.avatar == "string" ) {
-      console.log("inside if");
-      if ($el.hasClass("rotate90")) {
-        console.log('already rotated');
-      } else if ( u.device_name.match(/iPh/).length > 0 ) {
-        $el.find(".avatar_container img").addClass('rotate90');
-      }
-      $el.find(".avatar_container img").attr('src', (u.avatar || "/images/visitor_art@1x-21d82dcb.png"));
-    }
-
+    change_avatar(u,name_klass);
   });
 }
 
+var change_avatar = function(user_param, klass){
+
+  var element = $('.'+klass).find('.avatar_container img')
+  if (typeof user_param.avatar == "string" && user_param.avatar != element.attr('src')) {
+    if (klass.match(/iP/) && !element.hasClass('rotate90')) {
+      $('.'+klass).find(".avatar_container img").addClass("rotate90");
+    }
+    $('.'+klass).find(".avatar_container img").attr('src',user_param.avatar);
+  }
+};
 
 
 var Welcome = {

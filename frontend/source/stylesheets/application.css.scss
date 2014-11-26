@@ -182,14 +182,50 @@ body {
   .pin_rope {
     left: 30% !important;
   }
+  .avatar_container {
+    width: 266px;
+    max-height: 266px;
+  }
+
 }
 //12 or less
 .board.med .worker {
   @extend .col-sm-3;
+  .avatar_container {
+    width: 200px;
+    max-height: 200px;
+    img {
+      height: 190px;
+    }
+  }
+  .rotate90 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+     transform: rotate(90deg);
+     margin-left: -30px;
+  }
 }
 //24 or less
 .board.small .worker {
   @extend .col-sm-2;
+  .avatar_container {
+    width: 150px;
+    max-height: 150px;
+    img {
+      height: 140px;
+    }
+  }
+  .rotate90 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+     transform: rotate(90deg);
+     margin-left: -25px;
+
+  }
   .tape {
     font-size: 14px;
   }

@@ -6,6 +6,7 @@ require 'redis'
 require 'resolv'
 require 'sinatra/cross_origin'
 require 'aws/s3'
+require 'SecureRandom'
 
 Encoding.default_external = 'utf-8'  if defined?(::Encoding)
 
@@ -22,7 +23,7 @@ module BenevolentGaze
       def upload(filename, file, device_name)
         doomsday = Time.mktime(2038, 1, 18).to_i
         if (filename)
-          new_file_name = device_name.to_s + filename
+          new_file_name = device_name.to_s + SecureRandom.uuid.to_s + filename
           bucket = ENV['AWS_CDN_BUCKET']
           AWS::S3::Base.establish_connection!(
             :access_key_id     => ENV['AWS_ACCESS_KEY_ID'],
