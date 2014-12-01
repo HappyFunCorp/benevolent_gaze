@@ -12135,6 +12135,9 @@ var Worker = {
   set_name: function(string){
               $('.tape', w ).text(string);
             },
+  set_avatar: function(avatar_url){
+                $('.avatar_container img', w).attr('src', avatar_url || "/images/visitor_art@1x-21d82dcb.png");
+              },
   add_class: function(string){
                w.addClass(string.replace(/\./g, ""));
              },
@@ -12168,10 +12171,12 @@ var add_remove_workers = function(w){
       Welcome.move_logo_and_welcomes();
       current_people.push(worker_data);
       Worker.grab_worker();
+      Worker.set_avatar(worker_data.avatar);
       Worker.set_name(worker_data.name || sanitize_name(worker_data.device_name));
       Worker.add_class("."+klass);
       Worker.add_to_board();
       $('.newcomer h3').text(worker_data.name || sanitize_name(worker_data.device_name));
+      $('.newcomer_avatar img').attr('src', worker_data.avatar || "/images/visitor_art@1x-21d82dcb.png");
       $('.newcomer_avatar, .newcomer').show().removeClass('animated').removeClass('bounceOutUp').addClass('animated bounceInDown');
       $('.newcomer_avatar, .newcomer').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e) {
         $(this).removeClass('bounceInDown').addClass('bounceOutUp');
@@ -12181,7 +12186,7 @@ var add_remove_workers = function(w){
   });
   
   current_people = current_people.filter(function(worker){
-    var last_seen_plus_five_mins = parseInt(worker.last_seen) + 150000;
+    var last_seen_plus_five_mins = parseInt(worker.last_seen) + 75000;
 
     if (last_seen_plus_five_mins <= $.now()) {
       var klass = worker.device_name.replace(/\./g, "");
@@ -12209,6 +12214,7 @@ var sanitize_name = function(name){
   var name_change = name.replace(/(s\-).*/, "");
       name_change = name_change.replace(/\-.*/, "");
       name_change = name_change.replace(/siP.*/, "");
+      name_change = name_change.replace(/iP.*/, "");
       name_change = name_change.replace(/iM.*/, "");
       return name_change
 };

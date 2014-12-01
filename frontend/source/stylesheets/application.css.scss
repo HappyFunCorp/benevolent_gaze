@@ -66,7 +66,9 @@ body {
   display: none;
   z-index: 100;
   img {
+    max-width: 256px;
     margin: 0 auto;
+    border: 5px solid $tape;
   }
 }
 
@@ -198,14 +200,6 @@ body {
       height: 190px;
     }
   }
-  .rotate90 {
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-     transform: rotate(90deg);
-     margin-left: -30px;
-  }
 }
 //24 or less
 .board.small .worker {
@@ -216,15 +210,6 @@ body {
     img {
       height: 140px;
     }
-  }
-  .rotate90 {
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-     transform: rotate(90deg);
-     margin-left: -25px;
-
   }
   .tape {
     font-size: 14px;
@@ -270,12 +255,3 @@ body {
   max-width: 300px;
   margin: 10px auto;
 }
-
-.rotate90 {
-  -webkit-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-   transform: rotate(90deg);
-   margin-left: -50px;
-} 

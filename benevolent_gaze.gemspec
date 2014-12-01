@@ -27,7 +27,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "httparty"
   spec.add_dependency "sinatra-cross_origin", "~> 0.3.1"
   spec.add_dependency "aws-s3"
-
+  spec.add_dependency "mini_magick"
+  
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
 end

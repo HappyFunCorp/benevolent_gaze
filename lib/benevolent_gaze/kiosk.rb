@@ -7,6 +7,7 @@ require 'resolv'
 require 'sinatra/cross_origin'
 require 'aws/s3'
 require 'SecureRandom'
+require 'mini_magick'
 
 Encoding.default_external = 'utf-8'  if defined?(::Encoding)
 
@@ -23,15 +24,21 @@ module BenevolentGaze
       def upload(filename, file, device_name)
         doomsday = Time.mktime(2038, 1, 18).to_i
         if (filename)
-          new_file_name = device_name.to_s + SecureRandom.uuid.to_s + filename
+          new_file_name = device_name.to_s + SecureRandom.uuid.to_s + filename.gsub(".jpg", ".png")
           bucket = ENV['AWS_CDN_BUCKET']
+          image = MiniMagick::Image.open(file.path)
+          image.resize "400x400"
+          image.auto_orient
+          image.crop('300x300+0+0')
+          image.format "png"
+
           AWS::S3::Base.establish_connection!(
             :access_key_id     => ENV['AWS_ACCESS_KEY_ID'],
             :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
           )
           AWS::S3::S3Object.store(
             new_file_name,
-            open(file.path),
+            image.to_blob,
             bucket,
             :access => :public_read
           )
@@ -52,7 +59,7 @@ module BenevolentGaze
       device_name = dns.getname(request.ip)
       r = Redis.new
       devices = JSON.parse(r.get("all_devices"))
-      devices[device_name] = params[:real_name]
+      devices[device_name] = params[:real_name] || device_name
       r.set("all_devices", devices.to_json)
       puts params[:real_name].to_s + " just added their real name."
       puts params
