@@ -6,8 +6,8 @@ require 'benevolent_gaze/version'
 Gem::Specification.new do |spec|
   spec.name          = "benevolent_gaze"
   spec.version       = BenevolentGaze::VERSION
-  spec.authors       = ["Will Schenk"]
-  spec.email         = ["wschenk@gmail.com"]
+  spec.authors       = ["Will Schenk, Aaron Brocken"]
+  spec.email         = ["wschenk@gmail.com, aaron@happyfuncorp.com"]
   spec.summary       = %q{See your coworkers.}
   spec.description   = %q{See your coworkers.  Totally not creepy.}
   spec.homepage      = ""
