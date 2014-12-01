@@ -27,9 +27,9 @@ module BenevolentGaze
           new_file_name = device_name.to_s + SecureRandom.uuid.to_s + filename.gsub(".jpg", ".png")
           bucket = ENV['AWS_CDN_BUCKET']
           image = MiniMagick::Image.open(file.path)
-          image.resize "400x400"
           image.auto_orient
-          image.crop('300x300+0+0')
+          image.resize "300"
+          image.crop('300x300+0+50')
           image.format "png"
 
           AWS::S3::Base.establish_connection!(
