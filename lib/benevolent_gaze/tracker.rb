@@ -18,14 +18,21 @@ module BenevolentGaze
     private
     
     def check_time
-      if (@@old_time + (30*60)) <= Time.now.to_i
-        #Post local ip HTTParty.post('http://www.happyfuncorp.com/ident', query: {ip: `ipconfig getpacket en0 | yiaddr`.split(" = ")[-1].strip})
+      #if ((@@old_time + (30*60)) <= Time.now.to_i)
+      if (@@old_time <= Time.now.to_i)
+        begin
+          #TODO make sure to change the url to read from an environment variable for the correct company url.
+        HTTParty.post( ENV['BG_COMPANY_URL'] || 'http://localhost:3000/ident', query: { ip: `ifconfig | awk '/inet/ {print $2}' | grep -E '[[:digit:]]{1,3}\.' | tail -1` })
+        puts "Just sent localhost ip to server."
+        rescue
+          puts "Looks like there is something wrong with the endpoint to identify the localhost."
+        end
         @old_time = Time.now.to_i
-        puts "Just sent local ip to server for identification."
       end
     end
     
     def scan
+=begin
       # Look for the network broadcast address
       broadcast = `ifconfig -a | grep broadcast`.split[-1]
 
@@ -52,11 +59,19 @@ module BenevolentGaze
         device_names_and_ip_addresses[name] = nil
       end
       puts "****************************"
-      puts device_names_and_ip_addresses
+=end
+      device_names_hash = {}
+      device_names_arr = `for i in {1..255}; do echo ping -t 4 192.168.1.${i} ; done | parallel -j 0 --no-notice 2> /dev/null | awk '/ttl/ { print $4 }' | sort | uniq | sed 's/://' | xargs -n 1 host | awk '{ print $5 }' | sed 's/\.$//'`.split(/\n/)
+      device_names_arr.each do |d|
+        unless d.match(/Wireless|EPSON/)
+          device_names_hash[d] = nil
+        end
+      end
+      puts device_names_hash
       begin
-        HTTParty.post('http://localhost:4567/information', query: {devices: device_names_and_ip_addresses.to_json } )
+        HTTParty.post('http://localhost:4567/information', query: {devices: device_names_hash.to_json } )
       rescue
-        puts "Looks like you might not have your server up and running"
+        puts "Looks like you might not have the Benevolent Gaze gem running"
       end
     end
   end

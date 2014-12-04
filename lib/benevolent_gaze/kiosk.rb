@@ -63,11 +63,13 @@ module BenevolentGaze
       r.set("all_devices", devices.to_json)
       puts params[:real_name].to_s + " just added their real name."
       puts params
-      image_url_returned_from_upload_function = upload(params[:fileToUpload][:filename], params[:fileToUpload][:tempfile], device_name)
-      devices_with_images = r.get("devices_images") || "{}" 
-      parsed_devices_with_images = JSON.parse(devices_with_images)
-      parsed_devices_with_images[device_name] = image_url_returned_from_upload_function
-      r.set("devices_images", parsed_devices_with_images.to_json)
+      if params[:fileToUpload]
+        image_url_returned_from_upload_function = upload(params[:fileToUpload][:filename], params[:fileToUpload][:tempfile], device_name)
+        devices_with_images = r.get("devices_images") || "{}" 
+        parsed_devices_with_images = JSON.parse(devices_with_images)
+        parsed_devices_with_images[device_name] = image_url_returned_from_upload_function
+        r.set("devices_images", parsed_devices_with_images.to_json)
+      end
       puts r.get("all_devices")
       puts r.get("devices_images")
       puts r.get("devices_on_network")
@@ -87,7 +89,7 @@ module BenevolentGaze
           if out.closed?
             break
           end
-          data = JSON.parse(r.get("devices_on_network")).map do |k,v|
+          data = JSON.parse(r.get("devices_on_network") || "{}").map do |k,v|
             { device_name: k, name: v, last_seen: Time.now.to_f * 1000, avatar: JSON.parse(r.get("devices_images") || "{}" )[k] } 
           end
   

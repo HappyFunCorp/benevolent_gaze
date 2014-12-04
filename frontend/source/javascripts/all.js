@@ -59,7 +59,7 @@ var Worker = {
               $('.board').removeClass('med small xsmall').addClass('large');
             } else if ( w <= 12 ) {
               $('.board').removeClass('small xsmall large').addClass('med');
-            } else if ( w <= 24 ) {
+            } else if ( w <= 18 ) {
               $('.board').removeClass('xsmall large med').addClass('small');
             } else {
               $('.board').removeClass('large med small').addClass('xsmall');
@@ -121,6 +121,10 @@ var sanitize_name = function(name){
       name_change = name_change.replace(/siP.*/, "");
       name_change = name_change.replace(/iP.*/, "");
       name_change = name_change.replace(/iM.*/, "");
+      name_change = name_change.replace(/\..*/, "");
+      if (name_change == "") {
+        name_change = "GHOST";
+      }
       return name_change
 };
 

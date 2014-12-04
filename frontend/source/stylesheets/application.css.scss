@@ -110,9 +110,6 @@ body {
   }
 }
 
-.pin_and_avatar_container {
-  position: relative;
-}
 
 .pin_rope {
   //background: url( "/images/pin_rope@1x.png" );
@@ -127,6 +124,7 @@ body {
 .worker {
   padding-top: 25px;
   position: relative;
+  overflow: hidden;
 }
 
 .avatar_container {
@@ -188,6 +186,9 @@ body {
     width: 266px;
     max-height: 266px;
   }
+  .pin_and_avatar_container {
+    display: relative;
+  }
 
 }
 //12 or less
@@ -199,6 +200,9 @@ body {
     img {
       height: 190px;
     }
+  }
+  .pin_and_avatar_container {
+    display: relative;
   }
 }
 //24 or less
@@ -217,10 +221,17 @@ body {
   .pin_rope {
     left: 20px !important;
   }
+  .pin_and_avatar_container {
+    display: relative;
+  }
 }
 //25 or more
 .board.xsmall .worker {
-  @extend .col-sm-1
+  @extend .col-sm-1;
+  min-width: 200px;
+  .pin_and_avatar_container {
+    display: none;
+  }
 }
 
 //For register page.
