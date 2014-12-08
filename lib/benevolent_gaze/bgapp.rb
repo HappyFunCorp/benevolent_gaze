@@ -11,27 +11,21 @@ module BenevolentGaze
   class BGApp < Sinatra::Base
     set server: 'thin', connections: []
     set :bind, '0.0.0.0'
-    set :static, true
-    set :public_folder, File.expand_path( "../../../website/build", __FILE__ )
     
     register Sinatra::CrossOrigin
     
-    get "/register" do
+    get "/" do
       r = Redis.new
       if r.get("localhost")
-        redirect "#{r.get("localhost") + '/register'}"
+        redirect to(("http://#{r.get("localhost").strip + ':4567/register'}"))
       else
-        redirect "index.html"      
+        redirect to("http://happyfuncorp.com")
       end
     end
 
-    post "/ident" do
+    post "/" do
       r = Redis.new
-      r.set("localhost", params[:localhost])
-    end
-
-    get "/benevolent_gaze" do
-      redirect "index.html"
+      r.set("localhost", params[:ip])
     end
   end
 end

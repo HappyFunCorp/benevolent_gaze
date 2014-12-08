@@ -14,7 +14,8 @@
 
         .form-group
           %label= "Let's give your device a name!"
-          %input.form-control{type: "text", name: "real_name"}
+          %input.form-control{type: "text", name: "real_first_name", placeholder: "First Name"}
+          %input.form-control{type: "text", name: "real_last_name", placeholder: "Last Name"}
             %input.device_id_for_form{type: "hidden", name: "device_name"}
         %button.btn.btn-default{type: "submit"} SAY MAY NAME!
   

@@ -15,6 +15,8 @@ module BenevolentGaze
   class Kiosk < Sinatra::Base
     set server: 'thin', connections: []
     set :bind, '0.0.0.0'
+    set :app_file, __FILE__
+    set :port, ENV['PORT']
     set :static, true
     set :public_folder, File.expand_path( "../../../frontend/build", __FILE__ )
     
@@ -28,8 +30,15 @@ module BenevolentGaze
           bucket = ENV['AWS_CDN_BUCKET']
           image = MiniMagick::Image.open(file.path)
           image.auto_orient
-          image.resize "300"
-          image.crop('300x300+0+50')
+          if image.height > image.width
+            image.resize "300"
+            offset = (image.width/2) - 150
+            image.crop("300x300+0+#{offset}")
+          else
+            image.resize "x300"
+            offset = (image.height/2) - 150
+            image.crop("300x300+#{offset}+0")
+          end
           image.format "png"
 
           AWS::S3::Base.establish_connection!(
@@ -59,7 +68,10 @@ module BenevolentGaze
       device_name = dns.getname(request.ip)
       r = Redis.new
       devices = JSON.parse(r.get("all_devices"))
-      devices[device_name] = params[:real_name] || device_name
+      if params[:real_first_name] || params[:real_last_name]
+        compound_name = params[:real_first_name].to_s + params[:real_last_name].to_s
+      end
+      devices[device_name] = compound_name || device_name
       r.set("all_devices", devices.to_json)
       puts params[:real_name].to_s + " just added their real name."
       puts params

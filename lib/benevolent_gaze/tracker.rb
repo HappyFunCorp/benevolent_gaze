@@ -22,7 +22,7 @@ module BenevolentGaze
       if (@@old_time <= Time.now.to_i)
         begin
           #TODO make sure to change the url to read from an environment variable for the correct company url.
-        HTTParty.post( ENV['BG_COMPANY_URL'] || 'http://localhost:3000/ident', query: { ip: `ifconfig | awk '/inet/ {print $2}' | grep -E '[[:digit:]]{1,3}\.' | tail -1` })
+        HTTParty.post( (ENV['BG_COMPANY_URL'] || 'http://localhost:3000/register'), query: { ip: `ifconfig | awk '/inet/ {print $2}' | grep -E '[[:digit:]]{1,3}\.' | tail -1` })
         puts "Just sent localhost ip to server."
         rescue
           puts "Looks like there is something wrong with the endpoint to identify the localhost."
@@ -61,7 +61,7 @@ module BenevolentGaze
       puts "****************************"
 =end
       device_names_hash = {}
-      device_names_arr = `for i in {1..255}; do echo ping -t 4 192.168.1.${i} ; done | parallel -j 0 --no-notice 2> /dev/null | awk '/ttl/ { print $4 }' | sort | uniq | sed 's/://' | xargs -n 1 host | awk '{ print $5 }' | sed 's/\.$//'`.split(/\n/)
+      device_names_arr = `for i in {1..254}; do echo ping -t 4 192.168.1.${i} ; done | parallel -j 0 --no-notice 2> /dev/null | awk '/ttl/ { print $4 }' | sort | uniq | sed 's/://' | xargs -n 1 host | awk '{ print $5 }' | sed 's/\.$//'`.split(/\n/)
       device_names_arr.each do |d|
         unless d.match(/Wireless|EPSON/)
           device_names_hash[d] = nil
