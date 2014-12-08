@@ -127,7 +127,6 @@ module BenevolentGaze
       end
       r.set("devices_on_network",current_devices_with_names.to_json)
       r.set("all_devices", parsed_all_devices.to_json)
-
     end
   end
 end

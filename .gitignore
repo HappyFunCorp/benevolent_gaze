@@ -12,4 +12,5 @@
 *.o
 *.a
 .amazon_keys
+.env
 mkmf.log
