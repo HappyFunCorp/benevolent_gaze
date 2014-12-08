@@ -71,7 +71,7 @@ var Worker = {
 var add_remove_workers = function(w){
   w.map(function(worker_data){
     var klass = worker_data.device_name.replace(/\./g, "");
-    if($("."+klass).length > 0 || current_people_name_array.indexOf(worker_data.name) < 0) {
+    if($("."+klass).length > 0 || current_people_name_array.indexOf(worker_data.name) > 0) {
       console.log("nobody new");
     } else {
       Welcome.move_logo_and_welcomes();
