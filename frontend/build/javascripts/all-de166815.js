@@ -12237,7 +12237,7 @@ var rename_users = function(user_names) {
   user_names.map(function(u){
     var name_klass = u.device_name.replace(/\./g, "");
     var $el = $('.'+name_klass);
-    u_name = u.name || sanitize_name(u.device_name);
+    u_name = sanitize_name(u.name) || sanitize_name(u.device_name);
     $el.children('.tape').text(u_name);
     change_avatar(u,name_klass);
   });
