@@ -71,7 +71,11 @@ var Worker = {
 var add_remove_workers = function(w){
   w.map(function(worker_data){
     var klass = worker_data.device_name.replace(/\./g, "");
-    if($("."+klass).length > 0 || current_people_name_array.indexOf(worker_data.name) > 0) {
+    name_presence = current_people_name_array.indexOf(worker_data.name);
+    if ( name_presence < 0 ) {
+      current_people_name_array.push(worker_data.name);
+    }
+    if($("."+klass).length > 0 || name_presence > 0) {
       console.log("nobody new");
     } else {
       Welcome.move_logo_and_welcomes();
@@ -120,9 +124,9 @@ var add_remove_workers = function(w){
      return updated_person;
   });
 
-  current_people_name_array = current_people.map(function(cp){
-    return cp.name;
-  });
+  //current_people_name_array = current_people.map(function(cp){
+    //return cp.name;
+  //});
 
 };
 
