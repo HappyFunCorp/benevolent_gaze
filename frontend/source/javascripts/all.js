@@ -111,6 +111,7 @@ var add_remove_workers = function(w){
        if (cp.device_name == np.device_name) {
          updated_person = np;
        }
+       //if there is a name match this still updates the last_seen time on the other device so that it doesn't go stale.
        if (cp.name == np.name) {
          cp.last_seen = np.last_seen;
          updated_person = cp;
