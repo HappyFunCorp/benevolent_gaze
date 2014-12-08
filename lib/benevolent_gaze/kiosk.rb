@@ -71,7 +71,7 @@ module BenevolentGaze
       if params[:real_first_name] || params[:real_last_name]
         compound_name = "#{params[:real_first_name].to_s}  #{params[:real_last_name].to_s}"
       end
-      devices[device_name] = compound_name.strip.empty? ? device_name : compound_name
+      devices[device_name] = compound_name.strip.empty? ? nil : compound_name
       r.set("all_devices", devices.to_json)
       puts params[:real_name].to_s + " just added their real name."
       puts params

@@ -12173,10 +12173,10 @@ var add_remove_workers = function(w){
       current_people.push(worker_data);
       Worker.grab_worker();
       Worker.set_avatar(worker_data.avatar);
-      Worker.set_name(sanitize_name(worker_data.name) || sanitize_name(worker_data.device_name));
+      Worker.set_name(worker_data.name || sanitize_name(worker_data.device_name));
       Worker.add_class("."+klass);
       Worker.add_to_board();
-      $('.newcomer h3').text(sanitize_name(worker_data.name) || sanitize_name(worker_data.device_name));
+      $('.newcomer h3').text(worker_data.name || sanitize_name(worker_data.device_name));
       $('.newcomer_avatar img').attr('src', worker_data.avatar || "/images/visitor_art@1x-21d82dcb.png");
       $('.newcomer_avatar, .newcomer').show().removeClass('animated').removeClass('bounceOutUp').addClass('animated bounceInDown');
       $('.newcomer_avatar, .newcomer').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e) {
@@ -12237,7 +12237,7 @@ var rename_users = function(user_names) {
   user_names.map(function(u){
     var name_klass = u.device_name.replace(/\./g, "");
     var $el = $('.'+name_klass);
-    u_name = sanitize_name(u.name) || sanitize_name(u.device_name);
+    u_name = u.name || sanitize_name(u.device_name);
     $el.children('.tape').text(u_name);
     change_avatar(u,name_klass);
   });
