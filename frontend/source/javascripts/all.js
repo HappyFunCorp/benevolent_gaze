@@ -78,10 +78,10 @@ var add_remove_workers = function(w){
       current_people.push(worker_data);
       Worker.grab_worker();
       Worker.set_avatar(worker_data.avatar);
-      Worker.set_name(worker_data.name || sanitize_name(worker_data.device_name));
+      Worker.set_name(sanitize_name(worker_data.name) || sanitize_name(worker_data.device_name));
       Worker.add_class("."+klass);
       Worker.add_to_board();
-      $('.newcomer h3').text(worker_data.name || sanitize_name(worker_data.device_name));
+      $('.newcomer h3').text(sanitize_name(worker_data.name) || sanitize_name(worker_data.device_name));
       $('.newcomer_avatar img').attr('src', worker_data.avatar || "/images/visitor_art@1x.png");
       $('.newcomer_avatar, .newcomer').show().removeClass('animated').removeClass('bounceOutUp').addClass('animated bounceInDown');
       $('.newcomer_avatar, .newcomer').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e) {
