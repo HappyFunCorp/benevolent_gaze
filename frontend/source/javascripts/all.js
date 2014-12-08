@@ -6,6 +6,7 @@ $(function() {
 var es = new EventSource('/feed');
 var new_people = [];
 var current_people = [];
+var current_people_name_array = [];
 
 es.onmessage = function(e) {
   //console.log( "Got message", e )
@@ -59,7 +60,7 @@ var Worker = {
               $('.board').removeClass('med small xsmall').addClass('large');
             } else if ( w <= 12 ) {
               $('.board').removeClass('small xsmall large').addClass('med');
-            } else if ( w <= 18 ) {
+            } else if ( w <= 24 ) {
               $('.board').removeClass('xsmall large med').addClass('small');
             } else {
               $('.board').removeClass('large med small').addClass('xsmall');
@@ -70,7 +71,7 @@ var Worker = {
 var add_remove_workers = function(w){
   w.map(function(worker_data){
     var klass = worker_data.device_name.replace(/\./g, "");
-    if($("."+klass).length > 0) {
+    if($("."+klass).length > 0 || current_poeple_name_array.indexOf(worker_data.name) < 0) {
       console.log("nobody new");
     } else {
       Welcome.move_logo_and_welcomes();
@@ -110,9 +111,18 @@ var add_remove_workers = function(w){
        if (cp.device_name == np.device_name) {
          updated_person = np;
        }
+       if (cp.name == np.name) {
+         cp.last_seen = np.last_seen;
+         updated_person = cp;
+       }
      });
      return updated_person;
   });
+
+  current_people_name_array = current_people.map(function(cp){
+    return cp.name;
+  });
+
 };
 
 var sanitize_name = function(name){
@@ -123,7 +133,7 @@ var sanitize_name = function(name){
       name_change = name_change.replace(/iM.*/, "");
       name_change = name_change.replace(/\..*/, "");
       if (name_change == "") {
-        name_change = "GHOST";
+        name_change = "ANONYMOUS";
       }
       return name_change
 };
@@ -142,9 +152,9 @@ var change_avatar = function(user_param, klass){
 
   var element = $('.'+klass).find('.avatar_container img')
   if (typeof user_param.avatar == "string" && user_param.avatar != element.attr('src')) {
-    if (klass.match(/iP/) && !element.hasClass('rotate90')) {
-      $('.'+klass).find(".avatar_container img").addClass("rotate90");
-    }
+    //if (klass.match(/iP/) && !element.hasClass('rotate90')) {
+      //$('.'+klass).find(".avatar_container img").addClass("rotate90");
+    //}
     $('.'+klass).find(".avatar_container img").attr('src',user_param.avatar);
   }
 };

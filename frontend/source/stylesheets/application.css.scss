@@ -216,7 +216,15 @@ body {
     }
   }
   .tape {
+    line-height: 40px;
+    height: 40px;
     font-size: 14px;
+  }
+  .tape::before {
+    height: 40px;
+  }
+  .tape::after {
+    height: 40px;
   }
   .pin_rope {
     left: 20px !important;
