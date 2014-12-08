@@ -63,7 +63,7 @@ Now, when you run
 ```
 foreman start
 ```
-You the redis, the kiosk and the tracker will start doing their thing. It will also open up Chrome.
+Redis, the kiosk and the tracker will start doing their thing. It will also open up Chrome.
 
 ## Contributing
 
