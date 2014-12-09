@@ -12173,7 +12173,9 @@ var add_remove_workers = function(w){
     if($("."+klass).length > 0 || name_presence > 0 || name_in_temp_arr > 0) {
       console.log("nobody new");
     } else {
-      temp_name_arr.push(worker_data.name);
+      if (worker_data.name != null) {
+        temp_name_arr.push(worker_data.name);
+      }
       Welcome.move_logo_and_welcomes();
       current_people.push(worker_data);
       Worker.grab_worker();
