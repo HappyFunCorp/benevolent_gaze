@@ -12225,6 +12225,7 @@ var add_remove_workers = function(w){
   current_people_name_array = current_people.map(function(cp){
     return cp.name;
   });
+  console.log(current_people_name_array);
 
 };
 
