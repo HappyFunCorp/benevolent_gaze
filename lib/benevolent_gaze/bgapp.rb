@@ -10,7 +10,6 @@ Encoding.default_external = 'utf-8'  if defined?(::Encoding)
 module BenevolentGaze
   class BGApp < Sinatra::Base
     set server: 'thin', connections: []
-    set :bind, '0.0.0.0'
     
     register Sinatra::CrossOrigin
     
