@@ -60,6 +60,14 @@ module BenevolentGaze
       end
       puts "****************************"
 =end
+
+      #reintroduction of arp usage for mac addresses - will reintegrate soon.
+      device_name_and_mac_address_hash = {}
+      `arp -a | grep -v "?" | awk '{print $1 "\t" $4}'`.split("\n").each do |a| 
+        a = a.split("\t")
+        device_name_and_mac_address_hash[a[0]] = a[1] 
+      end
+
       device_names_hash = {}
       device_names_arr = `for i in {1..254}; do echo ping -t 4 192.168.1.${i} ; done | parallel -j 0 --no-notice 2> /dev/null | awk '/ttl/ { print $4 }' | sort | uniq | sed 's/://' | xargs -n 1 host | awk '{ print $5 }' | sed 's/\.$//'`.split(/\n/)
       device_names_arr.each do |d|
