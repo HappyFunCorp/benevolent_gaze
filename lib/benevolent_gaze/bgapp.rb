@@ -14,8 +14,13 @@ module BenevolentGaze
     
     register Sinatra::CrossOrigin
     
+    configure do
+      uri = URI.parse(ENV["REDISTOGO_URL"])
+      REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+    end
+
     get "/" do
-      r = Redis.new
+      r = REDIS.new
       if r.get("localhost")
         redirect to(("http://#{r.get("localhost").strip + ':4567/register'}"))
       else
@@ -24,7 +29,7 @@ module BenevolentGaze
     end
 
     post "/" do
-      r = Redis.new
+      r = REDIS.new
       r.set("localhost", params[:ip])
     end
   end
