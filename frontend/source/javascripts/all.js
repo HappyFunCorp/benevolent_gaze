@@ -109,7 +109,7 @@ var add_remove_workers = function(w){
         Worker.redraw();
       });
     };
-    return !(last_seen_plus_five_mins <= $.now());
+    return !(last_seen_plus_thirty_mins <= $.now());
   });
   
   current_people = current_people.map(function(cp){
