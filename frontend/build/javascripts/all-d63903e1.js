@@ -12164,13 +12164,20 @@ var Worker = {
 }
 
 var add_remove_workers = function(w){
+
   var temp_name_arr = [];
 
   w.map(function(worker_data){
     var klass = worker_data.device_name.replace(/\./g, "");
     name_presence = current_people_name_array.indexOf(worker_data.name);
     name_in_temp_arr = temp_name_arr.indexOf(worker_data.name);
-    if($("."+klass).length > 0 || name_presence > 0 || name_in_temp_arr > 0) {
+    console.log(temp_name_arr);
+    console.log(current_people_name_array);
+    if($("."+klass).length > 0 || current_people_name_array.indexOf(worker_data.name) >= 0 || temp_name_arr.indexOf(worker_data.name) >= 0) {
+      console.log(temp_name_arr.toString() + " " + current_people_name_array.toString());
+      console.log(worker_data.name);
+      console.log(current_people_name_array.indexOf(worker_data.name));
+      console.log(temp_name_arr.indexOf(worker_data.name));
       console.log("nobody new");
     } else {
       if (worker_data.name) {
@@ -12223,7 +12230,9 @@ var add_remove_workers = function(w){
   });
 
   current_people_name_array = current_people.map(function(cp){
-    return cp.name;
+    if (cp.name) {
+      return cp.name;
+    }
   });
 
 };
