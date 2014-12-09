@@ -215,17 +215,6 @@ body {
       height: 140px;
     }
   }
-  .tape {
-    line-height: 40px;
-    height: 40px;
-    font-size: 14px;
-  }
-  .tape::before {
-    height: 40px;
-  }
-  .tape::after {
-    height: 40px;
-  }
   .pin_rope {
     left: 20px !important;
   }
@@ -239,6 +228,20 @@ body {
   min-width: 200px;
   .pin_and_avatar_container {
     display: none;
+  }
+}
+
+.board.xsmall .worker, .board.small .worker {
+  .tape {
+    line-height: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+  .tape::before {
+    height: 40px;
+  }
+  .tape::after {
+    height: 40px;
   }
 }
 
