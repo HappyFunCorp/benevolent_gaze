@@ -12173,7 +12173,7 @@ var add_remove_workers = function(w){
     if($("."+klass).length > 0 || name_presence > 0 || name_in_temp_arr > 0) {
       console.log("nobody new");
     } else {
-      if (worker_data.name != null) {
+      if (worker_data.name) {
         temp_name_arr.push(worker_data.name);
       }
       Welcome.move_logo_and_welcomes();
@@ -12204,7 +12204,7 @@ var add_remove_workers = function(w){
         Worker.redraw();
       });
     };
-    return !(last_seen_plus_five_mins <= $.now());
+    return !(last_seen_plus_thirty_mins <= $.now());
   });
   
   current_people = current_people.map(function(cp){
@@ -12225,7 +12225,6 @@ var add_remove_workers = function(w){
   current_people_name_array = current_people.map(function(cp){
     return cp.name;
   });
-  console.log(current_people_name_array);
 
 };
 
