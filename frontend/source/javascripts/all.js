@@ -78,7 +78,7 @@ var add_remove_workers = function(w){
     if($("."+klass).length > 0 || name_presence > 0 || name_in_temp_arr > 0) {
       console.log("nobody new");
     } else {
-      if (worker_data.name != null) {
+      if (worker_data.name) {
         temp_name_arr.push(worker_data.name);
       }
       Welcome.move_logo_and_welcomes();
