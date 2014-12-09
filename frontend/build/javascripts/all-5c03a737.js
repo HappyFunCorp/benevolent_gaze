@@ -12164,15 +12164,16 @@ var Worker = {
 }
 
 var add_remove_workers = function(w){
+  var temp_name_arr = [];
+
   w.map(function(worker_data){
     var klass = worker_data.device_name.replace(/\./g, "");
     name_presence = current_people_name_array.indexOf(worker_data.name);
-    if ( name_presence < 0 ) {
-      current_people_name_array.push(worker_data.name);
-    }
-    if($("."+klass).length > 0 || name_presence > 0) {
+    name_in_temp_arr = temp_name_arr.indexOf(worker_data.name);
+    if($("."+klass).length > 0 || name_presence > 0 || name_in_temp_arr > 0) {
       console.log("nobody new");
     } else {
+      temp_name_arr.push(worker_data.name);
       Welcome.move_logo_and_welcomes();
       current_people.push(worker_data);
       Worker.grab_worker();
