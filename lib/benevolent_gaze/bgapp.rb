@@ -19,7 +19,7 @@ module BenevolentGaze
     end
 
     get "/" do
-      r = REDIS.new
+      r = REDIS
       if r.get("localhost")
         redirect to(("http://#{r.get("localhost").strip + ':4567/register'}"))
       else
@@ -28,7 +28,7 @@ module BenevolentGaze
     end
 
     post "/" do
-      r = REDIS.new
+      r = REDIS
       r.set("localhost", params[:ip])
     end
   end
