@@ -73,8 +73,6 @@ module BenevolentGaze
       end
       devices[device_name] = compound_name.strip.empty? ? devices[device_name] : compound_name
       r.set("all_devices", devices.to_json)
-      puts params[:real_name].to_s + " just added their real name."
-      puts params
       if params[:fileToUpload]
         image_url_returned_from_upload_function = upload(params[:fileToUpload][:filename], params[:fileToUpload][:tempfile], device_name)
         devices_with_images = r.get("devices_images") || "{}" 

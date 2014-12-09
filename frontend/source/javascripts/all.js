@@ -99,9 +99,9 @@ var add_remove_workers = function(w){
   });
   
   current_people = current_people.filter(function(worker){
-    var last_seen_plus_five_mins = parseInt(worker.last_seen) + 1800000;
+    var last_seen_plus_thirty_mins = parseInt(worker.last_seen) + 1800000;
 
-    if (last_seen_plus_five_mins <= $.now()) {
+    if (last_seen_plus_thirty_mins <= $.now()) {
       var klass = worker.device_name.replace(/\./g, "");
       Worker.remove_worker("."+klass);        
       $('.bounceOutDown').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e) {
