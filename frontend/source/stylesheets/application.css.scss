@@ -225,9 +225,16 @@ body {
 //25 or more
 .board.xsmall .worker {
   @extend .col-sm-1;
-  min-width: 200px;
-  .pin_and_avatar_container {
-    display: none;
+  min-width: 120px;
+  .avatar_container {
+    width: 100px;
+    max-height: 100px;
+    img {
+      max-height: 90px;
+    }
+  }
+  .tape {
+    overflow: hidden;
   }
 }
 
