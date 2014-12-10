@@ -89,7 +89,12 @@ body {
 .wifi {
   position: absolute;
   bottom: 0;
-  height: 80px;
+  height: 150px;
+  .register_url {
+    text-align: center;
+    margin-left: -35px;
+  }
+
   h3 {
     position: relative;
     &::before {
