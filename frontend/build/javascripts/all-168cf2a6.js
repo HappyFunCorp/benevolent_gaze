@@ -12171,14 +12171,8 @@ var add_remove_workers = function(w){
     var klass = worker_data.device_name.replace(/\./g, "");
     name_presence = current_people_name_array.indexOf(worker_data.name);
     name_in_temp_arr = temp_name_arr.indexOf(worker_data.name);
-    console.log(temp_name_arr);
-    console.log(current_people_name_array);
     if($("."+klass).length > 0 || current_people_name_array.indexOf(worker_data.name) >= 0 || temp_name_arr.indexOf(worker_data.name) >= 0) {
-      console.log(temp_name_arr.toString() + " " + current_people_name_array.toString());
-      console.log(worker_data.name);
-      console.log(current_people_name_array.indexOf(worker_data.name));
-      console.log(temp_name_arr.indexOf(worker_data.name));
-      console.log("nobody new");
+      console.log("Nobody new.");
     } else {
       if (worker_data.name) {
         temp_name_arr.push(worker_data.name);
@@ -12201,9 +12195,11 @@ var add_remove_workers = function(w){
   });
   
   current_people = current_people.filter(function(worker){
-    var last_seen_plus_thirty_mins = parseInt(worker.last_seen) + 1800000;
+    var last_seen_plus_fifteen_mins = parseInt(worker.last_seen) + 900000;
+    
+    console.log(last_seen_plus_fifteen_mins);
 
-    if (last_seen_plus_thirty_mins <= $.now()) {
+    if (last_seen_plus_fifteen_mins <= $.now()) {
       var klass = worker.device_name.replace(/\./g, "");
       Worker.remove_worker("."+klass);        
       $('.bounceOutDown').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e) {
@@ -12211,7 +12207,7 @@ var add_remove_workers = function(w){
         Worker.redraw();
       });
     };
-    return !(last_seen_plus_thirty_mins <= $.now());
+    return !(last_seen_plus_fifteen_mins <= $.now());
   });
   
   current_people = current_people.map(function(cp){
@@ -12221,7 +12217,7 @@ var add_remove_workers = function(w){
          updated_person = np;
        }
        //if there is a name match this still updates the last_seen time on the other device so that it doesn't go stale.
-       if (cp.name == np.name) {
+       if (cp.name == np.name && cp.name != null && np.name != null) {
          cp.last_seen = np.last_seen;
          updated_person = cp;
        }
