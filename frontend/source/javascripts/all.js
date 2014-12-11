@@ -102,7 +102,7 @@ var add_remove_workers = function(w){
   current_people = current_people.filter(function(worker){
     var last_seen_plus_fifteen_mins = parseInt(worker.last_seen) + 900000;
     
-    console.log(last_seen_plus_fifteen_mins);
+    console.log($.now() - last_seen_plus_fifteen_mins);
 
     if (last_seen_plus_fifteen_mins <= $.now()) {
       var klass = worker.device_name.replace(/\./g, "");
@@ -122,7 +122,7 @@ var add_remove_workers = function(w){
          updated_person = np;
        }
        //if there is a name match this still updates the last_seen time on the other device so that it doesn't go stale.
-       if (cp.name == np.name && cp.name != null && np.name != null) {
+       if (cp.name == np.name && cp.name && np.name) {
          cp.last_seen = np.last_seen;
          updated_person = cp;
        }

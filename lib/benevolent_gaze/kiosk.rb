@@ -32,11 +32,11 @@ module BenevolentGaze
           image.auto_orient
           if image.height > image.width
             image.resize "300"
-            offset = (image.width/2) - 150
+            offset = (image.height/2) - 150
             image.crop("300x300+0+#{offset}")
           else
             image.resize "x300"
-            offset = (image.height/2) - 150
+            offset = (image.width/2) - 150
             image.crop("300x300+#{offset}+0")
           end
           image.format "png"
@@ -67,22 +67,16 @@ module BenevolentGaze
       dns = Resolv.new
       device_name = dns.getname(request.ip)
       r = Redis.new
-      devices = JSON.parse(r.get("all_devices"))
+      r.set("name:"+device_name, (params[:real_first_name] + params[:real_last_name]))
+      
       if params[:real_first_name] || params[:real_last_name]
         compound_name = "#{params[:real_first_name].to_s.strip}  #{params[:real_last_name].to_s.strip}"
+        r.set("name:#{device_name}", compound_name)
       end
-      devices[device_name] = compound_name.strip.empty? ? devices[device_name] : compound_name
-      r.set("all_devices", devices.to_json)
       if params[:fileToUpload]
         image_url_returned_from_upload_function = upload(params[:fileToUpload][:filename], params[:fileToUpload][:tempfile], device_name)
-        devices_with_images = r.get("devices_images") || "{}" 
-        parsed_devices_with_images = JSON.parse(devices_with_images)
-        parsed_devices_with_images[device_name] = image_url_returned_from_upload_function
-        r.set("devices_images", parsed_devices_with_images.to_json)
+        r.set("image:#{device_name}", image_url_returned_from_upload)
       end
-      puts r.get("all_devices")
-      puts r.get("devices_images")
-      puts r.get("devices_on_network")
       redirect "thanks.html"
     end
 
@@ -99,8 +93,9 @@ module BenevolentGaze
           if out.closed?
             break
           end
-          data = JSON.parse(r.get("devices_on_network") || "{}").map do |k,v|
-            { device_name: k, name: v, last_seen: (Time.now.to_f * 1000).to_i, avatar: JSON.parse(r.get("devices_images") || "{}" )[k] } 
+          data = []
+          r.hgetall("current_devices").each do |k,v|
+            data << { device_name: k, name: v, last_seen: (Time.now.to_f * 1000).to_i, avatar: r.get("image:#{k}") } 
           end
   
           out << "data: #{data.to_json}\n\n"
@@ -113,18 +108,18 @@ module BenevolentGaze
       #grab current devices on network.  Save them to the devices on network key after we make sure that we grab the names that have been added already to the whole list and then save them to the updated hash for redis.
       devices_on_network = JSON.parse(params[:devices]) 
       r = Redis.new
-      all_devices = r.get("all_devices") || "{}"
-      parsed_all_devices = JSON.parse(all_devices)
-      current_devices = devices_on_network
-      current_devices_with_names = {}
-      current_devices.map do |k,v|
-        unless parsed_all_devices.keys.include?(k)
-          parsed_all_devices[k] = v 
-        end
-        current_devices_with_names[k] = parsed_all_devices[k]
+      old_set = r.hkeys("current_devices")      
+      new_set = devices_on_network.keys
+      diff_set = old_set - new_set
+
+      diff_set.each do |d|
+        r.hdel("current_devices", d)
       end
-      r.set("devices_on_network",current_devices_with_names.to_json)
-      r.set("all_devices", parsed_all_devices.to_json)
+
+      devices_on_network.each do |k,v|
+        r.hmset("current_devices", k, r.get("name:#{k}"))
+      end
+
     end
   end
 end
