@@ -71,7 +71,7 @@ module BenevolentGaze
       compound_name = nil
 
       if params[:real_first_name] || params[:real_last_name]
-        compound_name = "#{params[:real_first_name].to_s.strip}  #{params[:real_last_name].to_s.strip}"
+        compound_name = "#{params[:real_first_name].to_s.strip} #{params[:real_last_name].to_s.strip}"
         r.set("name:#{device_name}", compound_name)
       end
       if params[:fileToUpload]
@@ -98,7 +98,7 @@ module BenevolentGaze
           data = []
           r.hgetall("current_devices").each do |k,v|
             name_or_device_name = r.get("name:#{k}") || k
-            data << { device_name: k, name: v, last_seen: (Time.now.to_f * 1000).to_i, avatar: r.get("image:#{k}") } 
+            data << { device_name: k, name: v, last_seen: (Time.now.to_f * 1000).to_i, avatar: r.get("image:#{name_or_device_name}") } 
           end
   
           out << "data: #{data.to_json}\n\n"
