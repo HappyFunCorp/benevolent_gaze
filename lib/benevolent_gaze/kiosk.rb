@@ -75,7 +75,7 @@ module BenevolentGaze
       end
       if params[:fileToUpload]
         image_url_returned_from_upload_function = upload(params[:fileToUpload][:filename], params[:fileToUpload][:tempfile], device_name)
-        r.set("image:#{device_name}", image_url_returned_from_upload)
+        r.set("image:#{device_name}", image_url_returned_from_upload_function)
       end
       redirect "thanks.html"
     end
