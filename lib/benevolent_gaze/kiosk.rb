@@ -100,7 +100,7 @@ module BenevolentGaze
             break
           end
           data = JSON.parse(r.get("devices_on_network") || "{}").map do |k,v|
-            { device_name: k, name: v, last_seen: Time.now.to_f * 1000, avatar: JSON.parse(r.get("devices_images") || "{}" )[k] } 
+            { device_name: k, name: v, last_seen: (Time.now.to_f * 1000).to_i, avatar: JSON.parse(r.get("devices_images") || "{}" )[k] } 
           end
   
           out << "data: #{data.to_json}\n\n"
