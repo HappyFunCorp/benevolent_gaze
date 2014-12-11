@@ -67,7 +67,6 @@ module BenevolentGaze
       dns = Resolv.new
       device_name = dns.getname(request.ip)
       r = Redis.new
-      r.set("name:"+device_name, (params[:real_first_name] + params[:real_last_name]))
       
       if params[:real_first_name] || params[:real_last_name]
         compound_name = "#{params[:real_first_name].to_s.strip}  #{params[:real_last_name].to_s.strip}"
