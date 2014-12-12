@@ -5,8 +5,6 @@
 $(function() {
 var es = new EventSource('/feed');
 var new_people = [];
-var current_people = [];
-var current_people_name_array = [];
 
 es.onmessage = function(e) {
   //console.log( "Got message", e )
@@ -132,7 +130,7 @@ var sanitize_name = function(name){
 
 var check_last_seen = function() {
   $('.worker').each(function(wk){
-    if ($(wk).attr('data-lastseen') < ($.now() - 90000)) {
+    if (parseInt($(wk).attr('data-lastseen')) < ($.now() - 90000)) {
       Worker.remove_worker(wk);
     }
   })
