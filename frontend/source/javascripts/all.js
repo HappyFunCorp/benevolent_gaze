@@ -94,9 +94,6 @@ var add_remove_workers = function(w){
     data_attribute = "[data-name='" + (worker_data.name || worker_data.device_name) + "']";
     data_attribute_device = "[data-name='" + worker_data.device_name + "']";
     $element = $(data_attribute);
-    console.log(data_attribute);
-    console.log($element);
-    console.log($element.length);
     if ($element.length > 0) {
       $element.attr("data-lastseen", $.now());
       change_avatar(worker_data, data_attribute);
@@ -129,8 +126,13 @@ var sanitize_name = function(name){
 };
 
 var check_last_seen = function() {
-  $('.worker').each(function(wk){
+  $('.worker').each(function(num, wk){
+    console.log("not inside if yet");
+    console.log(wk);
+    console.log($(wk).attr('data-lastseen'));
+    console.log($.now() - 5000);
     if (parseInt($(wk).attr('data-lastseen')) < ($.now() - 90000)) {
+      console.log("inside if");
       Worker.remove_worker(wk);
     }
   })
