@@ -18,7 +18,7 @@ module BenevolentGaze
         uri = URI.parse(ENV["REDISTOGO_URL"])
         REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
       else
-        REDIS = REDIS.new
+        REDIS = Redis.new
       end
     end
 
