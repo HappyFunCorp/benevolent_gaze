@@ -14,8 +14,12 @@ module BenevolentGaze
     register Sinatra::CrossOrigin
     
     configure do
-      uri = URI.parse(ENV["REDISTOGO_URL"])
-      REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+      if ENV["REDISTOGO_URL"]
+        uri = URI.parse(ENV["REDISTOGO_URL"])
+        REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+      else
+        REDIS = REDIS.new
+      end
     end
 
     get "/" do
