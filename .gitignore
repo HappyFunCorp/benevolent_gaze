@@ -12,5 +12,6 @@
 *.o
 *.a
 .amazon_keys
-.env
+/.env
 mkmf.log
+.DS_Store

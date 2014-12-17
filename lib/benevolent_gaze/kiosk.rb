@@ -18,7 +18,7 @@ module BenevolentGaze
     set :app_file, __FILE__
     set :port, ENV['PORT']
     set :static, true
-    set :public_folder, File.expand_path( "../../../frontend/build", __FILE__ )
+    set :public_folder, 'public'
     
     register Sinatra::CrossOrigin
    
