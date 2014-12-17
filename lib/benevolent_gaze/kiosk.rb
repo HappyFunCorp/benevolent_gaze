@@ -39,6 +39,7 @@ module BenevolentGaze
             image = MiniMagick::Image.open(file.path)
 
             if File.extname(filename) == ".gif"
+              image.auto_orient
               image.repage "0x0"
               image.resize "300x300"
               image.crop "300x300"
@@ -97,7 +98,7 @@ module BenevolentGaze
       
       compound_name = nil
 
-      if params[:real_first_name] || params[:real_last_name]
+      if !params[:real_first_name].empty? || !params[:real_last_name].empty?
         compound_name = "#{params[:real_first_name].to_s.strip} #{params[:real_last_name].to_s.strip}"
         r.set("name:#{device_name}", compound_name)
       end
