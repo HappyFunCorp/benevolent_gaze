@@ -1,6 +1,7 @@
 # For custom domains on github pages
 page "CNAME", layout: false
 
+set :build_dir, '../kiosk/public'
 set :css_dir, 'stylesheets'
 set :js_dir, 'javascripts'
 set :images_dir, 'images'
