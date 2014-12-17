@@ -21,41 +21,68 @@ module BenevolentGaze
     set :public_folder, File.expand_path( "../../../frontend/build", __FILE__ )
     
     register Sinatra::CrossOrigin
+   
+    configure do
+      if ENV['AWS_ACCESS_KEY_ID'] && ENV['AWS_SECRET_ACCESS_KEY'] && ENV['AWS_CDN_BUCKET']
+        USE_AWS = true
+      else
+        USE_AWS = false
+      end
+    end
 
     helpers do
       def upload(filename, file, device_name)
-        doomsday = Time.mktime(2038, 1, 18).to_i
-        if (filename)
-          new_file_name = device_name.to_s + SecureRandom.uuid.to_s + filename.gsub(".jpg", ".png")
-          bucket = ENV['AWS_CDN_BUCKET']
-          image = MiniMagick::Image.open(file.path)
-          image.auto_orient
-          if image.height > image.width
-            image.resize "300"
-            offset = (image.height/2) - 150
-            image.crop("300x300+0+#{offset}")
-          else
-            image.resize "x300"
-            offset = (image.width/2) - 150
-            image.crop("300x300+#{offset}+0")
-          end
-          image.format "png"
+          doomsday = Time.mktime(2038, 1, 18).to_i
+          if (filename)
+            new_file_name = device_name.to_s + SecureRandom.uuid.to_s + filename
+            bucket = ENV['AWS_CDN_BUCKET']
+            image = MiniMagick::Image.open(file.path)
 
-          AWS::S3::Base.establish_connection!(
-            :access_key_id     => ENV['AWS_ACCESS_KEY_ID'],
-            :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
-          )
-          AWS::S3::S3Object.store(
-            new_file_name,
-            image.to_blob,
-            bucket,
-            :access => :public_read
-          )
-          image_url = AWS::S3::S3Object.url_for( new_file_name, bucket, :expires => doomsday )
-          return image_url 
-        else
-          return nil
-        end
+            if File.extname(filename) == ".gif"
+              image.repage "0x0"
+              image.resize "300x300"
+              image.crop "300x300"
+              image << "+repage"
+            else
+              if image.height > image.width
+                image.auto_orient
+                image.resize "300"
+                offset = (image.height/2) - 150
+                image.crop("300x300+0+#{offset}")
+              else
+                image.resize "x300"
+                offset = (image.width/2) - 150
+                image.crop("300x300+#{offset}+0")
+              end
+              image.format "png"
+            end
+
+            if USE_AWS
+              AWS::S3::Base.establish_connection!(
+                :access_key_id     => ENV['AWS_ACCESS_KEY_ID'],
+                :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+              )
+              AWS::S3::S3Object.store(
+                new_file_name,
+                image.to_blob,
+                bucket,
+                :access => :public_read
+              )
+              image_url = AWS::S3::S3Object.url_for( new_file_name, bucket, :expires => doomsday )
+            else
+              upload_path = ENV['UPLOAD_PATH'] || "~/uploads/"
+              file_on_disk = upload_path + new_file_name
+              File.open(file_on_disk, 'w') do |f|
+                f.write(image.to_blob)
+              end
+              image_url = file_on_disk
+            end
+
+            return image_url 
+            
+          else
+            return nil
+          end
       end
     end
 
