@@ -38,15 +38,22 @@ module BenevolentGaze
             bucket = ENV['AWS_CDN_BUCKET']
             image = MiniMagick::Image.open(file.path)
 
-            if File.extname(filename) == ".gif"
-              image.auto_orient
+            animated_gif = `identify -format "%n" "#{file.path}"`.to_i > 1
+            if animated_gif
               image.repage "0x0"
-              image.resize "300x300"
-              image.crop "300x300"
+              if image.height > image.width
+                image.resize "300"
+                offset = (image.height/2) - 150
+                image.crop("300x300+0+#{offset}")
+              else
+                image.resize "x300"
+                offset = (image.width/2) - 150
+                image.crop("300x300+#{offset}+0")
+              end
               image << "+repage"
             else
+              image.auto_orient
               if image.height > image.width
-                image.auto_orient
                 image.resize "300"
                 offset = (image.height/2) - 150
                 image.crop("300x300+0+#{offset}")
