@@ -67,7 +67,7 @@ module BenevolentGaze
     desc "generate generates a Procfile and .env file", "This command generates a Procfile and .env file for you to use with Benevolent Gaze."
     def generate
       cp("#{File.dirname(__FILE__)}/../../bin/Procfile", "./Procfile")
-      cp("#{File.dirname(__FILE__)}/../../bin/.env", "./.env")
+      cp("#{File.dirname(__FILE__)}/../../bin/.user_env", "./.env")
       puts "Copied Procfile and .env file to current directory"
       self.bg_flair
     end
