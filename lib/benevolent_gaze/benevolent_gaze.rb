@@ -75,7 +75,7 @@ module BenevolentGaze
       new_path = File.expand_path("./bg_public")
       contents.gsub!(/.*public_folder.*/, "\t\tset :public_folder, \"#{new_path}\"") 
       contents.gsub!(/.*insert_local_file_system.*/, "\t\t@@local_file_system=\"#{File.expand_path("./bg_public")}\"")
-      File.open("#{File.dirname(__FILE__)}/../../lib/benevolent_gaze/kiosk2.rb", "w") do |f|
+      File.open("#{File.dirname(__FILE__)}/../../lib/benevolent_gaze/kiosk.rb", "w") do |f|
         f << contents
       end
       puts <<-CUSTOMIZE
