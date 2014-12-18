@@ -1,22 +1,12 @@
-GIT
-  remote: git://github.com/happyfuncode/middleman-meta-tags.git
-  revision: fd6d03f84216def82b684693aefb234af6534980
-  branch: develop
-  specs:
-    middleman-meta-tags (0.0.1)
-      middleman-core (>= 3.0.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.1.7)
+    activesupport (4.1.8)
       i18n (~> 0.6, >= 0.6.9)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
-    bootstrap-navbar (2.2.2)
-      gem_config (~> 0.3)
     bootstrap-sass (3.3.1.0)
       sass (~> 3.2)
     builder (3.2.2)
@@ -46,7 +36,6 @@ GEM
     eventmachine (1.0.3)
     execjs (2.2.2)
     ffi (1.9.6)
-    gem_config (0.3.1)
     haml (4.0.5)
       tilt
     hike (1.2.3)
@@ -74,9 +63,8 @@ GEM
       middleman-sprockets (>= 3.1.2)
       sass (>= 3.4.0, < 4.0)
       uglifier (~> 2.5)
-    middleman-bootstrap-navbar (2.0.0)
-      bootstrap-navbar (~> 2.0)
-      middleman-core (>= 3.0)
+    middleman-autometatags (0.0.1)
+      middleman-core (>= 3.0.0)
     middleman-core (3.3.7)
       activesupport (~> 4.1.0)
       bundler (~> 1.1)
@@ -123,6 +111,7 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    redcarpet (3.2.0)
     sass (3.4.8)
     sprockets (2.12.3)
       hike (~> 1.2)
@@ -154,9 +143,9 @@ DEPENDENCIES
   builder (~> 3.0)
   jquery-middleman
   middleman (~> 3.3.7)
-  middleman-bootstrap-navbar
+  middleman-autometatags
   middleman-deploy
   middleman-livereload (~> 3.1.0)
-  middleman-meta-tags!
+  redcarpet
   tzinfo-data
   wdm (~> 0.1.0)

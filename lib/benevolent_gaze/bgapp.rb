@@ -33,6 +33,9 @@ module BenevolentGaze
 
     post "/" do
       r = REDIS
+      puts request.referrer
+      puts request.ip
+      puts request 
       puts params[:ip].to_s + "THIS IS THE IP RECEIVED BY THE SERVER FROM BENEVOLENT GAZE"
       r.set("localhost", params[:ip])
     end
