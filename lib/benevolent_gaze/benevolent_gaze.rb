@@ -84,7 +84,8 @@ module BenevolentGaze
       #File.open("#{File.dirname(__FILE__)}/../../kiosk/public/index.html", "w") do |f|
         #f << index_contents
       #end
-      gsub_file("public/index.html", "happiness4u", uname)
+      gsub_file("bg_public/public/index.html", "happyfuncorp3", uname)
+      gsub_file("bg_public/public/index.html", "happiness4u", pass) 
       puts <<-CUSTOMIZE
 
       #{Thor::Shell::Color::MAGENTA}**************************************************#{Thor::Shell::Color::CLEAR}
