@@ -71,7 +71,7 @@ module BenevolentGaze
     desc "install wifi_username, wifi_password", "This commands installs the necessary components in the gem and pulls the assets into a local folder so that you can save to your local file system if you do not want to use s3 and also enables you to customize your kiosk."
     def install(uname, pass)
       directory ".", "bg_public"
-      kiosk_file = "#{File.read("#{File.dirname(__FILE__)}/../../lib/benevolent_gaze/kiosk.rb"
+      kiosk_file = "#{File.dirname(__FILE__)}/../../lib/benevolent_gaze/kiosk.rb"
       new_path = File.expand_path("./bg_public")
       gsub_file(kiosk_file, /.*public_folder.*/, "\t\tset :public_folder, \"#{new_path}/public\"") 
       gsub_file(kiosk_file, /.*insert_local_file_system.*/, "\t\t@@local_file_system=\"#{File.expand_path("./bg_public/public/")}\"")
