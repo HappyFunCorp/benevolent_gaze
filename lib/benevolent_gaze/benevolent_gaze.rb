@@ -81,7 +81,7 @@ module BenevolentGaze
       index_contents = File.read("#{File.dirname(__FILE__)}/../../kiosk/public/index.html")
       index_contents.gsub!(/happyfuncorp3/, uname)
       index_contents.gsub!(/happiness4u/, pass)
-      File.open("#{File.dirname(__FILE__)}/../../kiosk/public/index.html") do |f|
+      File.open("#{File.dirname(__FILE__)}/../../kiosk/public/index.html", "w") do |f|
         f << index_contents
       end
       puts <<-CUSTOMIZE
