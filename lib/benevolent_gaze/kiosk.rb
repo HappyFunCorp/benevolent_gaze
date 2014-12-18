@@ -79,7 +79,7 @@ module BenevolentGaze
               )
               image_url = AWS::S3::S3Object.url_for( new_file_name, bucket, :expires => doomsday )
             else
-              upload_path =  @@local_file_system + 'images/uploads/'
+              upload_path =  @@local_file_system + '/images/uploads/'
               file_on_disk = upload_path + new_file_name
               File.open(File.expand_path(file_on_disk), "w") do |f|
                 f.write(image.to_blob)
