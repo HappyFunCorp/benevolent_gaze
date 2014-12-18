@@ -6,6 +6,8 @@ include FileUtils
 module BenevolentGaze
   class Cli < Thor
     include Thor::Actions
+    @@source_root = source_root File.expand_path("../../../kiosk", __FILE__)
+    
     desc "add_user device name image", "Add single user's device name, name and image"
     long_desc <<-LONGDESC
       This command takes a user's device name, real name and image url and maps them
@@ -66,48 +68,39 @@ module BenevolentGaze
       self.bg_flair
     end
 
-    desc "generate generates a Procfile and .env file", "This command generates a Procfile and .env file for you to use with Benevolent Gaze."
-    def generate
-      cp("#{File.dirname(__FILE__)}/../../bin/Procfile", "./Procfile")
-      cp("#{File.dirname(__FILE__)}/../../bin/.user_env", "./.env")
-      puts "Copied Procfile and .env file to current directory"
-      self.bg_flair
-    end
-
-    desc "generate_and_customize generates Procfile and .env file and copy frontend components to current directory.", "This command generates the Procfile, .env file and copies the front end components directory into the current directory so you can customize the look."
-    def generate_and_customize
-      self.generate
-      cp_r("#{File.dirname(__FILE__)}/../../frontend", "./frontend")
+    desc "install", "This commands installs the necessary components in the gem and pulls the assets into a local folder so that you can save to your local file system if you do not want to use s3 and also enables you to customize your kiosk."
+    def install
+      directory ".", "bg_public"
       contents = File.read("#{File.dirname(__FILE__)}/../../lib/benevolent_gaze/kiosk.rb")
-      new_path = File.expand_path("./frontend/build")
+      new_path = File.expand_path("./bg_public")
       contents.gsub!(/.*public_folder.*/, "\t\tset :public_folder, \"#{new_path}\"") 
-      
-      File.open("#{File.dirname(__FILE__)}/../../lib/benevolent_gaze/kiosk.rb", "w") do |f|
+      contents.gsub!(/.*insert_local_file_system.*/, "\t\t@@local_file_system=\"#{File.expand_path("./bg_public")}\"")
+      File.open("#{File.dirname(__FILE__)}/../../lib/benevolent_gaze/kiosk2.rb", "w") do |f|
         f << contents
       end
-
       puts <<-CUSTOMIZE
 
       #{Thor::Shell::Color::MAGENTA}**************************************************#{Thor::Shell::Color::CLEAR}
 
-      Generated Procfile and .env and copied frontend folder into current directory.
-      
-      You can now customize your kiosk, by switching out the graphics in frontend/source/images.
+      Generated the bg_public folder where you should go to customize images and to run 
+
+      ```foreman start```
+
+      Please modify the .env file with the relevant information mentioned in the README.
+
+      You can now customize your kiosk, by switching out the graphics in the images folder.
       Please replace the images with the images of the same size.
-      Then you will need to run:
 
-      #{Thor::Shell::Color::MAGENTA}$ bundle exec middleman build#{Thor::Shell::Color::CLEAR}
-
-      This rebuilds your project. Then you can restart Benevolent Gaze And VOILA! You have your new kiosk!
+      Uploaded images will save to your local filesystem if you do not supply AWS creds.
 
       #{Thor::Shell::Color::MAGENTA}**************************************************#{Thor::Shell::Color::CLEAR}
       CUSTOMIZE
+
       self.bg_flair
     end
-    
+
     desc "bg_flair prints Benevolent Gaze in ascii art letters, because awesome.", "This command prints Benevolent Gaze in ascii art letters, because...um...well...it's cool looking!"
     def bg_flair
-      puts destination_root
       @bg = <<-BG
         #{Thor::Shell::Color::CYAN}
     ____                             _            _      _____               

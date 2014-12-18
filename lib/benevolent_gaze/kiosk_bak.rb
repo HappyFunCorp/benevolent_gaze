@@ -18,12 +18,13 @@ module BenevolentGaze
     set :app_file, __FILE__
     set :port, ENV['PORT']
     set :static, true
-    set :public_folder, File.expand_path( "../../../frontend/build", __FILE__ )
-    
+    set :public_folder, 'public'
+    @@local_file_system = "insert_local_file_system"
+
     register Sinatra::CrossOrigin
    
     configure do
-      if ENV['AWS_ACCESS_KEY_ID'] && ENV['AWS_SECRET_ACCESS_KEY'] && ENV['AWS_CDN_BUCKET']
+      unless ENV['AWS_ACCESS_KEY_ID'].empty? || ENV['AWS_SECRET_ACCESS_KEY'].empty? || ENV['AWS_CDN_BUCKET'].empty?
         USE_AWS = true
       else
         USE_AWS = false
@@ -38,14 +39,22 @@ module BenevolentGaze
             bucket = ENV['AWS_CDN_BUCKET']
             image = MiniMagick::Image.open(file.path)
 
-            if File.extname(filename) == ".gif"
+            animated_gif = `identify -format "%n" "#{file.path}"`.to_i > 1
+            if animated_gif
               image.repage "0x0"
-              image.resize "300x300"
-              image.crop "300x300"
+              if image.height > image.width
+                image.resize "300"
+                offset = (image.height/2) - 150
+                image.crop("300x300+0+#{offset}")
+              else
+                image.resize "x300"
+                offset = (image.width/2) - 150
+                image.crop("300x300+#{offset}+0")
+              end
               image << "+repage"
             else
+              image.auto_orient
               if image.height > image.width
-                image.auto_orient
                 image.resize "300"
                 offset = (image.height/2) - 150
                 image.crop("300x300+0+#{offset}")
@@ -70,12 +79,12 @@ module BenevolentGaze
               )
               image_url = AWS::S3::S3Object.url_for( new_file_name, bucket, :expires => doomsday )
             else
-              upload_path = ENV['UPLOAD_PATH'] || "~/uploads/"
+              upload_path =  @@local_file_system 
               file_on_disk = upload_path + new_file_name
-              File.open(file_on_disk, 'w') do |f|
+              File.open(File.expand_path(file_on_disk), "w") do |f|
                 f.write(image.to_blob)
               end
-              image_url = file_on_disk
+              image_url = "images/uploads/" + new_file_name
             end
 
             return image_url 
@@ -97,7 +106,7 @@ module BenevolentGaze
       
       compound_name = nil
 
-      if params[:real_first_name] || params[:real_last_name]
+      if !params[:real_first_name].empty? || !params[:real_last_name].empty?
         compound_name = "#{params[:real_first_name].to_s.strip} #{params[:real_last_name].to_s.strip}"
         r.set("name:#{device_name}", compound_name)
       end
