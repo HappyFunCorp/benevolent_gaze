@@ -1,13 +1,16 @@
 require 'thor'
 require 'thor/actions'
 require 'csv'
+require 'benevolent_gaze/kiosk'
+require 'benevolent_gaze/tracker'
+
 include FileUtils
 
 module BenevolentGaze
   class Cli < Thor
     include Thor::Actions
     source_root File.expand_path("../../../kiosk", __FILE__)
-    
+   
     desc "add_user device name image", "Add single user's device name, name and image"
     long_desc <<-LONGDESC
       This command takes a user's device name, real name and image url and maps them

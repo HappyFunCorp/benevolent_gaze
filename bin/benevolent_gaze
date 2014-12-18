@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby -wKU
 
-require 'benevolent_gaze/benevolent_gaze'
+require 'benevolent_gaze/cli'
 
 BenevolentGaze::Cli.start( ARGV )
