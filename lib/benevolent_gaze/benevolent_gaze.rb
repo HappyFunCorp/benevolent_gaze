@@ -73,8 +73,8 @@ module BenevolentGaze
       directory ".", "bg_public"
       contents = File.read("#{File.dirname(__FILE__)}/../../lib/benevolent_gaze/kiosk.rb")
       new_path = File.expand_path("./bg_public")
-      contents.gsub!(/.*public_folder.*/, "\t\tset :public_folder, \"#{new_path}\"") 
-      contents.gsub!(/.*insert_local_file_system.*/, "\t\t@@local_file_system=\"#{File.expand_path("./bg_public")}\"")
+      contents.gsub!(/.*public_folder.*/, "\t\tset :public_folder, \"#{new_path}/public\"") 
+      contents.gsub!(/.*insert_local_file_system.*/, "\t\t@@local_file_system=\"#{File.expand_path("./bg_public/public/")}\"")
       File.open("#{File.dirname(__FILE__)}/../../lib/benevolent_gaze/kiosk.rb", "w") do |f|
         f << contents
       end
