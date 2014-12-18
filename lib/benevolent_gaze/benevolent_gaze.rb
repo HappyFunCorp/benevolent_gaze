@@ -1,9 +1,11 @@
 require 'thor'
+require 'thor/actions'
 require 'csv'
 include FileUtils
 
 module BenevolentGaze
   class Cli < Thor
+    include Thor::Actions
     desc "add_user device name image", "Add single user's device name, name and image"
     long_desc <<-LONGDESC
       This command takes a user's device name, real name and image url and maps them
@@ -105,6 +107,7 @@ module BenevolentGaze
     
     desc "bg_flair prints Benevolent Gaze in ascii art letters, because awesome.", "This command prints Benevolent Gaze in ascii art letters, because...um...well...it's cool looking!"
     def bg_flair
+      puts destination_root
       @bg = <<-BG
         #{Thor::Shell::Color::CYAN}
     ____                             _            _      _____               

@@ -23,7 +23,7 @@ module BenevolentGaze
     register Sinatra::CrossOrigin
    
     configure do
-      if ENV['AWS_ACCESS_KEY_ID'] && ENV['AWS_SECRET_ACCESS_KEY'] && ENV['AWS_CDN_BUCKET']
+      unless ENV['AWS_ACCESS_KEY_ID'].empty? || ENV['AWS_SECRET_ACCESS_KEY'].empty? || ENV['AWS_CDN_BUCKET'].empty?
         USE_AWS = true
       else
         USE_AWS = false
@@ -78,12 +78,12 @@ module BenevolentGaze
               )
               image_url = AWS::S3::S3Object.url_for( new_file_name, bucket, :expires => doomsday )
             else
-              upload_path = ENV['UPLOAD_PATH'] || "~/uploads/"
+              upload_path = "public/images/uploads/"
               file_on_disk = upload_path + new_file_name
-              File.open(file_on_disk, 'w') do |f|
+              File.open(File.expand_path(file_on_disk), "w") do |f|
                 f.write(image.to_blob)
               end
-              image_url = file_on_disk
+              image_url = "images/uploads/" + new_file_name
             end
 
             return image_url 

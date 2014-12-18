@@ -133,7 +133,7 @@ var check_last_seen = function() {
     console.log(wk);
     console.log($(wk).attr('data-lastseen'));
     console.log($.now() - 5000);
-    if (parseInt($(wk).attr('data-lastseen')) < ($.now() - 90000) && $(wk).find('.tape').text() !== "Ted" ) {
+    if (parseInt($(wk).attr('data-lastseen')) < ($.now() - 900000) && $(wk).find('.tape').text() !== "Ted" ) {
       console.log("inside if");
       Worker.remove_worker(wk);
     }
