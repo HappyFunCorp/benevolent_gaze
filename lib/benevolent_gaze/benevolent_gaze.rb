@@ -6,7 +6,7 @@ include FileUtils
 module BenevolentGaze
   class Cli < Thor
     include Thor::Actions
-    @@source_root = source_root File.expand_path("../../../kiosk", __FILE__)
+    source_root File.expand_path("../../../kiosk", __FILE__)
     
     desc "add_user device name image", "Add single user's device name, name and image"
     long_desc <<-LONGDESC
@@ -77,12 +77,13 @@ module BenevolentGaze
       File.open("#{File.dirname(__FILE__)}/../../lib/benevolent_gaze/kiosk.rb", "w") do |f|
         f << contents
       end
-      index_contents = File.read("#{File.dirname(__FILE__)}/../../kiosk/public/index.html")
-      index_contents.gsub!(/happyfuncorp3/, uname)
-      index_contents.gsub!(/happiness4u/, pass)
-      File.open("#{File.dirname(__FILE__)}/../../kiosk/public/index.html", "w") do |f|
-        f << index_contents
-      end
+      #index_contents = File.read("#{File.dirname(__FILE__)}/../../kiosk/public/index.html")
+      #index_contents.gsub!(/happyfuncorp3/, uname)
+      #index_contents.gsub!(/happiness4u/, pass)
+      #File.open("#{File.dirname(__FILE__)}/../../kiosk/public/index.html", "w") do |f|
+        #f << index_contents
+      #end
+      gsub_file("public/index.html", "happiness4u", "asdfasdfasdfasdfasdf")
       directory ".", "bg_public"
       puts <<-CUSTOMIZE
 
