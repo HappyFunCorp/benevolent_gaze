@@ -68,8 +68,8 @@ module BenevolentGaze
       self.bg_flair
     end
 
-    desc "install", "This commands installs the necessary components in the gem and pulls the assets into a local folder so that you can save to your local file system if you do not want to use s3 and also enables you to customize your kiosk."
-    def install
+    desc "install wifi_username, wifi_password", "This commands installs the necessary components in the gem and pulls the assets into a local folder so that you can save to your local file system if you do not want to use s3 and also enables you to customize your kiosk."
+    def install(uname, pass)
       directory ".", "bg_public"
       contents = File.read("#{File.dirname(__FILE__)}/../../lib/benevolent_gaze/kiosk.rb")
       new_path = File.expand_path("./bg_public")
@@ -77,6 +77,12 @@ module BenevolentGaze
       contents.gsub!(/.*insert_local_file_system.*/, "\t\t@@local_file_system=\"#{File.expand_path("./bg_public/public/")}\"")
       File.open("#{File.dirname(__FILE__)}/../../lib/benevolent_gaze/kiosk.rb", "w") do |f|
         f << contents
+      end
+      index_contents = File.read("#{File.dirname(__FILE__)}/../../kiosk/public/index.html")
+      index_contents.gsub!(/happyfuncorp3/, uname)
+      index_contents.gsub!(/happiness4u/, pass)
+      File.open("#{File.dirname(__FILE__)}/../../kiosk/public/index.html") do |f|
+        f << index_contents
       end
       puts <<-CUSTOMIZE
 
