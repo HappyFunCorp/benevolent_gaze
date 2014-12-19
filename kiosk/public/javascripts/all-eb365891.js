@@ -12134,7 +12134,7 @@ var Worker = {
           Worker.add_to_board(worker_object);
         },
   grab_worker: function(){
-                 w = $('.worker').first().clone();
+                 w = $('.worker').first().clone().removeClass('hidden');
                },
   set_image: function(string){
     $('img', w).attr('src', string);

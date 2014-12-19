@@ -16,7 +16,7 @@ module BenevolentGaze
     set server: 'thin', connections: []
     set :bind, '0.0.0.0'
     set :app_file, __FILE__
-    set :port, ENV['PORT']
+    set :port, ENV['IPORT']
     set :static, true
     set :public_folder, 'public'
     @@local_file_system = "insert_local_file_system"

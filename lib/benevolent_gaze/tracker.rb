@@ -22,9 +22,8 @@ module BenevolentGaze
       if (@@old_time <= Time.now.to_i)
         begin
           #TODO make sure to change the url to read from an environment variable for the correct company url.
-          puts ENV['IPORT']
         HTTParty.post( (ENV['BG_COMPANY_URL'] || 'http://localhost:3000/register'), query: { ip: `ifconfig | awk '/inet/ {print $2}' | grep -E '[[:digit:]]{1,3}\\.' | tail -1`.strip + ":#{ENV['IPORT']}/register"})
-        puts "Just sent localhost ip to server."
+        puts "Just sent localhost address to server."
         rescue
           puts "Looks like there is something wrong with the endpoint to identify the localhost."
         end
@@ -78,7 +77,7 @@ module BenevolentGaze
       end
       puts device_names_hash
       begin
-        HTTParty.post('http://localhost:4567/information', query: {devices: device_names_hash.to_json } )
+        HTTParty.post("http://localhost:#{ENV['IPORT']}/information", query: {devices: device_names_hash.to_json } )
       rescue
         puts "Looks like you might not have the Benevolent Gaze gem running"
       end
