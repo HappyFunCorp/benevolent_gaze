@@ -24,7 +24,7 @@ module BenevolentGaze
     register Sinatra::CrossOrigin
    
     configure do
-      unless ENV['AWS_ACCESS_KEY_ID'].empty? || ENV['AWS_SECRET_ACCESS_KEY'].empty? || ENV['AWS_CDN_BUCKET'].empty?
+      unless ENV['AWS_ACCESS_KEY_ID'].nil? || ENV['AWS_ACCESS_KEY_ID'].empty? || ENV['AWS_SECRET_ACCESS_KEY'].empty? || ENV['AWS_CDN_BUCKET'].empty?
         USE_AWS = true
       else
         USE_AWS = false

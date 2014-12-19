@@ -1,2 +1,2 @@
-kiosk:      bundle exec kiosk -p $PORT
-tracker:    bundle exec tracker
+kiosk:      benevolent_gaze kiosk
+tracker:    benevolent_gaze tracker
