@@ -13,6 +13,8 @@ You can use Benevolent Gaze! If it doesn't return a host name, you will have to 
 
 Now let's get down to business!
 
+##KEEP IN MIND: This version is targeted toward screens that are a 16:9 ratio.
+
 ## Install the gem
 
 ```$ gem install benevolent_gaze```
