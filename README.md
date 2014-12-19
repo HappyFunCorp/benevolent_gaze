@@ -40,9 +40,10 @@ This command creates a folder caled bg_public which contains a Procfile to use w
 
 If you ran the `benevolent_gaze  install` command above, you should now have a Procfile and .env file in your folder.  The Procfile is good to go. The .env file will need populated with relevant information however. Leave the PORT set to 4567.
 
-```"AWS_ACCESS_KEY_ID='_insert_your_aws_access_key_here_'\nAWS_CDN_BUCKET='_insert_your_aws_bucket_here_'\nAWS_SECRET_ACCESS_KEY='_insert_your_aws_secret_access_key_here_'\nBG_COMPANY_URL='http://www.yourcompanywebsite.com/where_you_mounted_the_benevolent_gaze_app'\nPORT=4567"```
+     "AWS_ACCESS_KEY_ID='_insert_your_aws_access_key_here_'\nAWS_CDN_BUCKET='_insert_your_aws_bucket_here_'\nAWS_SECRET_ACCESS_KEY='_insert_your_aws_secret_access_key_here_'\nBG_COMPANY_URL='http://www.yourcompanywebsite.com/where_you_mounted_the_benevolent_gaze_app'\nPORT=4567"
 
-***You can use your local file system to save image uploads instead of AWS by just not filling in your AWS creds.  It defaults to saving to your local file system if you haven't supplied any credentials.
+
+***You can use your local file system to save image uploads instead of AWS by just not filling in your AWS creds.  It defaults to saving to your local file system if you haven't supplied any credentials.***
 
 ## Add a register url to your site.
 
