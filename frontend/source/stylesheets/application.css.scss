@@ -17,25 +17,50 @@ body {
 
 .board {
   background-image: url( "/images/board@1x.png" );
-  min-width: 800px;
-  min-height: 1080px;
+  background-size: 100%;
+  background-position: center;
+  //min-width: 800px;
+  //min-height: 1080px;
+}
+
+.page_container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+}
+
+.page_container .app_container {
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .sky {
   background-image: url( "/images/sky@1x.png" );
-  width: 800px;
-  height: 1080px;
+  background-position: center;
+  background-size: 100%;
+  //width: 800px;
+  width: 100%;
+  //height: 1080px;
+  height: 100%;
   position: relative;
 }
 
 .left_column {
-  min-width: 800px;
-  min-height: 1080px;
+  //min-width: 800px;
+  width: 42%;
+  //min-height: 1080px;
+  height: 100%;
 }
 
 .right_column {
-  min-width: 1120px;
-  min-height: 1080px;
+  //min-width: 1120px;
+  width: 58%;
+  //min-height: 1080px;
+  height: 100%;
 }
 
 .logo {
@@ -288,4 +313,39 @@ body {
 .register_container img {
   max-width: 300px;
   margin: 10px auto;
+}
+
+@media( max-width: 1919px ) {
+  body {
+    overflow: scroll;
+  }
+  .left_column {
+    display: none;
+  }
+  .right_column {
+    width: 100%;
+    background-image: url( "/images/sky@1x.png" );
+    background-size: auto;
+  }
+  .pin_rope {
+    display: none;
+  }
+}
+
+@media (max-width: 970px) {
+  .avatar_container {
+    width: 100% !important;
+    height: auto;
+    max-height: 350px !important;
+    display: inline-block;
+    img {
+      width: 100%;
+      height: 100% !important;
+      max-width: 350px;
+      max-height: 350px !important;
+    }
+  }
+  .pin_rope {
+    display: none;
+  }
 }
