@@ -1,2 +1,2 @@
-kiosk:      bundle exec kiosk -p $PORT
-tracker:    bundle exec tracker
+kiosk:      kiosk -p $PORT
+tracker:    tracker
