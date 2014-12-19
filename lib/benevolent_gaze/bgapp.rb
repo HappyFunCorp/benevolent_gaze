@@ -24,20 +24,16 @@ module BenevolentGaze
 
     get "/" do
       r = REDIS
-      if r.get("localhost")
-        redirect to(("http://#{r.get("localhost").strip + ':4567/register'}"))
+      if r.get("bg:host:#{request.ip}")
+        redirect to(("http://#{r.get("bg:host:#{request.ip}").strip}"))
       else
-        redirect to("http://happyfuncorp.com")
+        redirect to("/")
       end
     end
 
     post "/" do
       r = REDIS
-      puts request.referrer
-      puts request.ip
-      puts request 
-      puts params[:ip].to_s + "THIS IS THE IP RECEIVED BY THE SERVER FROM BENEVOLENT GAZE"
-      r.set("localhost", params[:ip])
+      r.set("bg:host:#{request.ip}", params[:ip])
     end
   end
 end

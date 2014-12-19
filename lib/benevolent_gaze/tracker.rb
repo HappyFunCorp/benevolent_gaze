@@ -22,7 +22,8 @@ module BenevolentGaze
       if (@@old_time <= Time.now.to_i)
         begin
           #TODO make sure to change the url to read from an environment variable for the correct company url.
-        HTTParty.post( (ENV['BG_COMPANY_URL'] || 'http://localhost:3000/register'), query: { ip: `ifconfig | awk '/inet/ {print $2}' | grep -E '[[:digit:]]{1,3}\\.' | tail -1` })
+          puts ENV['IPORT']
+        HTTParty.post( (ENV['BG_COMPANY_URL'] || 'http://localhost:3000/register'), query: { ip: `ifconfig | awk '/inet/ {print $2}' | grep -E '[[:digit:]]{1,3}\\.' | tail -1`.strip + ":#{ENV['IPORT']}/register"})
         puts "Just sent localhost ip to server."
         rescue
           puts "Looks like there is something wrong with the endpoint to identify the localhost."

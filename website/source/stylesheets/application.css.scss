@@ -37,15 +37,17 @@ $creamy: #ffeace;
 $cream: #F9F4EF;
 $green: #77B48A;
 $grey: #D6D6D6;
-$blue: #1F2D44;
-$navy: #1F2D44;
+$blue: #37446c;
+$navy: $blue;
 $charcoal: #2F3620;
 $white: #fff;
-
+$pink: #fe5d83; 
+$dark-pink: #ec486f; 
+$purple: rgb(60, 15, 64);
 $sky-top: #d3ecf5;
 $sky-bot: #7FD5F2;
 
-$brand-primary: $green;
+$brand-primary: $pink;
 $color-accent: #428bca;
 $color-background: #202a39;
 $color-background-light: darken( white, 10% ); // #DAE3BB; //#3D6299;
@@ -53,7 +55,7 @@ $color-text: #ddd;
 $color-text-light: $color-background; //#3F005E;
 
 $font-size-base: 18px;
-
+$link-color: $purple;
 $header-font-size-base: 16px;
 
 $font-size-h1:            floor(($header-font-size-base * 2.6)); // ~36px
@@ -73,10 +75,10 @@ $text-color: $charcoal;
 $navbar-inverse-brand-color: $text-color;
 
 
-$code-bg: $creamy;
+$code-bg: $dark-pink;
 $code-color: $charcoal;
-$pre-bg: $creamy;
-$pre-border-color: darken($creamy,5%);
+$pre-bg: $dark-pink;
+$pre-border-color: darken($dark-pink,5%);
 $pre-color: $charcoal;
 
 $section-spacing: 80px;
@@ -94,7 +96,7 @@ $section-spacing: 80px;
 body {
   //padding-top: $navbar-height;
 }
-#happy-seed {
+#benevolent-gaze {
   display: block;
   width: 100%;
   height: $navbar-height;
@@ -167,9 +169,9 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 2px solid #fff;
   font-family: 'TelegraficoRegular';
   .navbar-brand {
-    padding-top: 20px;
+    padding-top: 17px;
     color: #fff;
-    font-size: 2.0em;
+    font-size: 1.25em;
     .icon {
       margin-right: 10px;
     }
@@ -203,8 +205,8 @@ section {
   .background {
     position: absolute;
     top: 0;
-    left: -10%;
-    width: 120%;
+    left: -20%;
+    width: 140%;
     height: 100%;
   }
   &.under .background {
@@ -229,20 +231,36 @@ section {
     padding-top: 400px;
   }
 
-  &.cream {
+  &.purple {
     .background {
-      background-color: $cream;
+      background-color: $purple;
+    }
+    .left-col {
+      h1 {
+        color: $creamy;
+      }
+    }
+    .right-col {
+      h1 {
+        color: $pink;
+      }
+      p, h2 {
+        color: $creamy;
+      }
     }
   }
 
-  &.green {
+  &.pink {
     .background {
-      background-color: $green;
+      background-color: $pink;
     }
-    color: $white;
+    color: $creamy;
 
     h1 {
-      color: $cream;
+      color: $creamy;
+    }
+    h3 {
+      color: $purple;
     }
   }
 
@@ -258,7 +276,10 @@ section {
     }
     color: $white;
     h1.jumbo {
-      color: $green;
+      color: $pink;
+    }
+    &.under a {
+      color: white;
     }
   }
 
@@ -276,22 +297,20 @@ section {
   background-size: 100% 100%;
 
   &.icon-seed-logo-white {
-    background-image: image-url('splash/seed-logo.png');
-    width: 0.5*50px;
-    height: 0.5*71px;
+    //background-image: image-url('splash/seed-logo.png');
+    background-image: image-url('splash/benevolent_gaze_icon@2x.png');
+    width: 0.5*98px;
+    height: 0.5*80px;
   }
-  &.icon-solid-gems {
-    background-image: image-url('splash/solid-gems.png');
+  &.accessorized {
+    background-image: image-url('splash/accessorized_badge@2x.png');
   }
-  &.icon-sensible-defaults {
-    background-image: image-url('splash/sensible-defaults.png');
+  &.easy {
+    background-image: image-url('splash/easy_badge@2x.png');
   }
-  &.icon-more-awesome-stuff {
-    background-image: image-url('splash/more-awesome-stuff.png');
-  }
-  &.icon-solid-gems, &.icon-sensible-defaults, &.icon-more-awesome-stuff {
-    width: 0.5*274px;
-    height: 0.5*271px;
+  &.easy, &.accessorized {
+    width: 0.5*264px;
+    height: 0.5*261px;
   }
 }
 
@@ -306,10 +325,11 @@ ul.checkmarked {
 
   li::before {
     content: " ";
-    width: 0.5*38px;
-    height: 0.5*38px;
-    background-image: image-url('splash/checkmark.png');
-    background-size: 0.5*38px 0.5*38px;;
+    width: 0.5*36px;
+    height: 0.5*36px;
+    //background-image: image-url('splash/checkmark.png');
+    background-image: image-url('splash/single_check@2x.png');
+    background-size: 0.5*36px 0.5*36px;;
     display: inline-block;
     vertical-align: middle;
     margin-right: 8px;
@@ -333,7 +353,8 @@ ul.checkmarked {
   right: 20px;
   width: 0.5*199px;
   height: 0.5*305px;
-  background-image: image-url('splash/view-me-on-github.png');
+  //background-image: image-url('splash/view-me-on-github.png');
+  background-image: image-url('splash/github_banner@2x.png');
   background-size: 100% 100%;
   z-index: 10000;
 }
@@ -365,13 +386,25 @@ ul.checkmarked {
   }
 }
 #ted {
-  background-image: image-url('splash/ted.png');
-  width: 0.5*950px;
-  height: 0.5*782px;
+  //background-image: image-url('splash/ted.png');
+  background-image: image-url('splash/ted_on_unicorn@2x.png');
+  width: 0.5*538px;
+  height: 0.5*611px;
   background-size: 100% 100%;
   position: absolute;
-  top: -410px;
-  left: -390px;
+  top: -360px;
+  left: -120px;
+}
+
+#rainbow {
+  background-image: image-url('splash/rainbow@2x.png');
+  width: 100%;
+  height: 0.5*806px;
+  background-size: 100% 100%;
+  background-position: center;
+  position: absolute;
+  top: 40px;
+  left: 50px;
 }
 
 #logo-container {
@@ -379,15 +412,15 @@ ul.checkmarked {
   margin-left: auto;
   margin-right: auto;
   position: relative;
-  width: 0.5*232px;
-  height: 0.5*308px;
-  margin-top: 20px;
+  width: 0.5*338px;
+  height: 0.5*400px;
 }
 
 
-#seed-logo { background-image: image-url('splash/seed-logo-color.png');
-  width: 0.5*232px;
-  height: 0.5*308px;
+//#seed-logo { background-image: image-url('splash/seed-logo-color.png');
+#seed-logo { background-image: image-url('splash/complete_badge@2x.png');
+  width: 0.5*338px;
+  height: 0.5*400px;
   background-size: 100% 100%;
 }
 
@@ -431,7 +464,7 @@ ul.checkmarked {
   display: block;
   width: 100%;
   top: 350px;
-  height: 0.5*1113px;
+  height: 800px;
   background-image: image-url('splash/clouds.png');
   background-size: 0.5*2917px 0.5*1400px;
   background-position:center top;
@@ -440,6 +473,7 @@ ul.checkmarked {
 .overbracket h2 {
   margin-left: -25px;
   margin-right: -25px;
+  color: $purple;
 }
 #why p.caps {
   text-transform: uppercase;
@@ -456,10 +490,14 @@ h3.outset {
 
 @media( max-width: #{$screen-xs-max} ) {
   #ted {
-    width: 0.6*475px;
-    height: 0.6*391px;
-    top: -258px;
-    left: -213px;
+    width: 0.4*530px;
+    height: 0.4*611px;
+    top: -250px;
+    left: -50px;
+  }
+  #rainbow {
+    top: -50px;
+    left: 0px;
   }
   #fg-clouds {
     top: 257px;
