@@ -22,7 +22,7 @@ Now let's get down to business!
 You will need to install parallel and Redis. If you use Homebrew, it is as easy as:
 
 ```$ brew install parallel```
-```%pre=$ brew install redis```
+```$ brew install redis```
 
 You will also need to install Foreman.
 
