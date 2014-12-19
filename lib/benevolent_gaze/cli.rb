@@ -79,7 +79,6 @@ module BenevolentGaze
       gsub_file(env_file, /.*PUBLIC_FOLDER.*/, "PUBLIC_FOLDER=\"#{new_path}/public\"") 
       gsub_file("bg_public/public/index.html", "happyfuncorp3", uname)
       gsub_file("bg_public/public/index.html", "happiness4u", pass) 
-      directory ".", "bg_public"
       puts <<-CUSTOMIZE
 
       #{Thor::Shell::Color::MAGENTA}**************************************************#{Thor::Shell::Color::CLEAR}
