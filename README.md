@@ -22,6 +22,7 @@ Now let's get down to business!
 You will need to install parallel and Redis. If you use Homebrew, it is as easy as:
 
 ```$ brew install parallel```
+
 ```$ brew install redis```
 
 You will also need to install Foreman.
@@ -54,7 +55,15 @@ If you ran the `benevolent_gaze  install` command above, you should now have a P
 
 If you want users to associate an image and a name other than their device name with their devices you should add the following to your web app that you want to add the registration url to. Add the following to your routes.rb file.
 
-```require 'benevolent_gaze/bgapp'\n\nmount BenevolentGaze::BGApp, at: '/register'```
+```
+mount BenevolentGaze::BGApp, at: '/register'
+```
+
+And make sure that you've included the class in an initializer:
+
+```
+require 'benevolent_gaze/bgapp'
+```
   
 This works by receiving information from the tracker you have running on your local network.  So when users hit yoursite.com/register they are redirected to where you have the local kiosk running.  Users can now upload a photo, and if they give their same name to all of their devices, they will all be grouped under one avatar.
 
@@ -72,7 +81,7 @@ Make sure you have Redis running both locally and on the app where you mounted t
 
 Start your local benevolent_gaze instance. Go into your bg_public folder and run:
 
-```%pre= $ foreman start```
+```$ foreman start```
 
 ### Step 3. 
 
