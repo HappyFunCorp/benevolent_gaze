@@ -18,8 +18,8 @@ module BenevolentGaze
     set :app_file, __FILE__
     set :port, ENV['IPORT']
     set :static, true
-    set :public_folder, './bg_public/public'
-    @@local_file_system = './bg_public/public'
+    set :public_folder, ENV['PUBLIC_FOLDER'] || "public"
+    @@local_file_system = ENV['PUBLIC_FOLDER']
 
     register Sinatra::CrossOrigin
    
