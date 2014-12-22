@@ -79,7 +79,7 @@ $code-bg: $dark-pink;
 $code-color: $charcoal;
 $pre-bg: $dark-pink;
 $pre-border-color: darken($dark-pink,5%);
-$pre-color: $charcoal;
+$pre-color: $white;
 
 $section-spacing: 80px;
 
@@ -96,12 +96,16 @@ $section-spacing: 80px;
 body {
   //padding-top: $navbar-height;
 }
+
+h2 {
+  color: $purple;
+}
+
 #benevolent-gaze {
   display: block;
   width: 100%;
   height: $navbar-height;
 }
-
 
 .left-col {
   @extend .col-md-3;
@@ -244,7 +248,7 @@ section {
       h1 {
         color: $pink;
       }
-      p, h2 {
+      h2 {
         color: $creamy;
       }
     }
@@ -259,8 +263,17 @@ section {
     h1 {
       color: $creamy;
     }
-    h3 {
+    h2 {
       color: $purple;
+    }
+    h3 {
+      color: $creamy;
+    }
+  }
+
+  &.pink, &.purple {
+    p {
+      color: $creamy;
     }
   }
 
@@ -375,6 +388,10 @@ ul.checkmarked {
   //margin-top: -6px;
 }
 
+.screenshot {
+  box-shadow: 5px 5px 2px #F7E4CA;     
+  border-radius: 15px;
+}
 
 //-----------------------------------------
 // Hacks

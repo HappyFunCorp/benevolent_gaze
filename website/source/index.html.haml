@@ -21,7 +21,7 @@
             %span.glyphicon.glyphicon-chevron-down
     .row
       .col-md-8.col-md-offset-2.col-sm-10.col-sm-offset-1
-        = image_tag "gaze.png", class: "img-responsive"
+        = image_tag "gaze.png", class: "img-responsive screenshot"
 
 %section#what.pink.over
   .background
@@ -30,12 +30,13 @@
       .right-col
         %h1.text-center-sm
           Know who is on your network and greet them when they join!
-          <br>Need to have a meeting? Find out if the person is present by checking their connectivity!
+        %p
+          Need to have a meeting? Find out if the person is present by checking their connectivity!
     .row
       .left-col
         %h2.icon.accessorized What it does.
       .right-col
-        %h3 Benevolent Gaze helps you keep track of who is connected to your&nbsp;network.
+        %h2 Benevolent Gaze helps you keep track of who is connected to your&nbsp;network.
         %ul.checkmarked
           %li It scans your network to see who is present. 
           %li You run it locally with the gem inside of your network.
@@ -46,7 +47,7 @@
       .left-col
         %h2.icon.easy Easy to use.
       .right-col
-        %h3 Easy to use.
+        %h2 Easy to use.
         %ul.checkmarked
           %li Users don't have to do anything but join your network.
           %li Quickly and easily swap out graphics to have a nice branded interface.
@@ -138,14 +139,14 @@
 
         .doc-group
           .doc-col
-            %h2 Step 1. 
+            %h3 Step 1. 
 
             %p Make sure you have Redis running both locally and on the app where you mounted the application. You will need to set your redistogo url in an environment variable called REDISTOGO_URL on heroku (or wherever you have deployed the app where you mounted the registration endpoint).
 
             %pre= "$ heroku config:set REDISTOGO_URL=''"
 
           .doc-col
-            %h2 Step 2. 
+            %h3 Step 2. 
 
             %p Start your local benevolent_gaze instance. Go into your bg_public folder and run:
 
@@ -153,12 +154,12 @@
 
         .doc-group
           .doc-col
-            %h2 Step 3. 
+            %h3 Step 3. 
             
             %p Go to localhost:4567 and check out the interface. You should be able to see people on the right hand side of the screen like the screenshot above!
 
           .doc-col
-            %h2 Step 4.
+            %h3 Step 4.
 
             %p Enjoy Benevolent Gaze with your friends and fellow colleagues!
 
