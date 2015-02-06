@@ -113,4 +113,4 @@ This will prompt you for the current users on the network, if any of them do not
 
 This expects a csv formatted with the columns device-name, real-name, and image-url.
 #CHANGELOG
-This should now accomodate all screens. Optimized for sizes that conform to the aspect ration targeted (16:9).
+This should now accomodate all screens. Optimized for sizes that conform to the aspect ratio targeted (16:9).
