@@ -587,7 +587,7 @@ footer {
       @include placeholder( $navy );
     }
 
-    .btn {
+    .btn, .btn.btn-default {
       background: $pink !important;
       color: white;
     }
