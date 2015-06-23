@@ -17,25 +17,50 @@ body {
 
 .board {
   background-image: url( "/images/board@1x.png" );
-  min-width: 800px;
-  min-height: 1080px;
+  background-size: 100%;
+  background-position: center;
+  //min-width: 800px;
+  //min-height: 1080px;
+}
+
+.page_container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+}
+
+.page_container .app_container {
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .sky {
   background-image: url( "/images/sky@1x.png" );
-  width: 800px;
-  height: 1080px;
+  background-position: center;
+  background-size: 100%;
+  //width: 800px;
+  width: 100%;
+  //height: 1080px;
+  height: 100%;
   position: relative;
 }
 
 .left_column {
-  min-width: 800px;
-  min-height: 1080px;
+  //min-width: 800px;
+  width: 42%;
+  //min-height: 1080px;
+  height: 100%;
 }
 
 .right_column {
-  min-width: 1120px;
-  min-height: 1080px;
+  //min-width: 1120px;
+  width: 58%;
+  //min-height: 1080px;
+  height: 100%;
 }
 
 .logo {
@@ -66,7 +91,9 @@ body {
   display: none;
   z-index: 100;
   img {
+    max-width: 256px;
     margin: 0 auto;
+    border: 5px solid $tape;
   }
 }
 
@@ -87,7 +114,12 @@ body {
 .wifi {
   position: absolute;
   bottom: 0;
-  height: 80px;
+  height: 150px;
+  .register_url {
+    text-align: center;
+    margin-left: -35px;
+  }
+
   h3 {
     position: relative;
     &::before {
@@ -108,9 +140,6 @@ body {
   }
 }
 
-.pin_and_avatar_container {
-  position: relative;
-}
 
 .pin_rope {
   //background: url( "/images/pin_rope@1x.png" );
@@ -125,12 +154,14 @@ body {
 .worker {
   padding-top: 25px;
   position: relative;
+  //overflow: hidden;
 }
 
 .avatar_container {
+  width: 100%;
   //width: 80%;
-  width: 266px;
-  max-height: 266px;
+  //width: 266px;
+  //max-height: 266px;
   position: relative;
   margin: 0 auto;
   overflow: hidden;
@@ -140,7 +171,9 @@ body {
   box-shadow: 0px 0px 5px 2px #333;
 
   img {
-    max-height: 270px;
+    //max-height: 270px;
+    width: 100%;
+    height: auto;
     //border: 5px solid $tape;
   }
 }
@@ -182,24 +215,49 @@ body {
   .pin_rope {
     left: 30% !important;
   }
+  .pin_and_avatar_container {
+    display: relative;
+  }
+
 }
 //12 or less
 .board.med .worker {
   @extend .col-sm-3;
+  .pin_and_avatar_container {
+    display: relative;
+  }
 }
 //24 or less
 .board.small .worker {
   @extend .col-sm-2;
-  .tape {
-    font-size: 14px;
-  }
   .pin_rope {
     left: 20px !important;
+  }
+  .pin_and_avatar_container {
+    display: relative;
   }
 }
 //25 or more
 .board.xsmall .worker {
-  @extend .col-sm-1
+  @extend .col-sm-1;
+  min-width: 120px;
+  .tape {
+    overflow: hidden;
+  }
+}
+
+.board.xsmall .worker, .board.small .worker {
+  .tape {
+    line-height: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+  .tape::before {
+    height: 40px;
+  }
+  .tape::after {
+    height: 40px;
+  }
 }
 
 //For register page.
@@ -235,11 +293,35 @@ body {
   margin: 10px auto;
 }
 
-.rotate90 {
-  -webkit-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-   transform: rotate(90deg);
-   margin-left: -50px;
-} 
+@media( max-width: 1919px ) {
+  body {
+    overflow: scroll;
+  }
+  .left_column {
+    display: none;
+  }
+  .right_column {
+    width: 100%;
+    background-image: url( "/images/sky@1x.png" );
+    background-size: auto;
+  }
+  .pin_rope {
+    display: none;
+  }
+}
+
+@media (max-width: 970px) {
+  .avatar_container {
+    //max-height: 350px !important;
+    //display: inline-block;
+    img {
+     // width: 100%;
+      height: 100% !important;
+      max-width: 350px;
+      max-height: 350px !important;
+    }
+  }
+  .pin_rope {
+    display: none;
+  }
+}

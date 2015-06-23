@@ -1,68 +1,184 @@
----
-title: Welcome to Happy Seeds Static Site
----
+#benevolent-gaze
+%section.masthead.under.first
 
-.container
-  .row
-    .col-xs-12
-      %h1.animated.bounce.text-center Welcome to Happy Seed
+  #clouds
+  #rainbow{"data-scroll-reveal"=>"enter from the bottom but wait .5s"}
+  #fg-clouds
+  .container
+    .row
+      .col-md-12.text-center
+        #logo-container
+          #ted{"data-scroll-reveal"=>"enter from the top but wait .5s"}
+          %h1#seed-logo.logo{"data-scroll-reveal"=>"enter bottom but wait .5s"}
+            Benevolent Gaze
+        .row
+          .col-md-8.col-md-offset-2.mb-1
+            .overbracket{"data-scroll-reveal"=>"enter bottom but wait .5s"}
+              %h2{"data-scroll-reveal"=>"enter bottom but wait .5s"}
+                Gently watch over your network <br> to know who is available and who isn't<br>...so you can save on the guesswork.
+        #bottom{"data-scroll-reveal"=>"enter bottom but wait 2s over 2s"}
+          = link_to '#what' do
+            %span.glyphicon.glyphicon-chevron-down
+    .row
+      .col-md-8.col-md-offset-2.col-sm-10.col-sm-offset-1
+        = image_tag "gaze.png", class: "img-responsive screenshot"
 
-  .row
-    .col-sm-6
-      %h2 What's installed
+%section#what.pink.over
+  .background
+  .container
+    .row
+      .right-col
+        %h1.text-center-sm
+          Know who is on your network and greet them when they join!
+        %p
+          Need to have a meeting? Find out if the person is present by checking their connectivity!
+    .row
+      .left-col
+        %h2.icon.accessorized What it does.
+      .right-col
+        %h2 Benevolent Gaze helps you keep track of who is connected to your&nbsp;network.
+        %ul.checkmarked
+          %li It scans your network to see who is present. 
+          %li You run it locally with the gem inside of your network.
+          %li Allow users to register their devices under their name.
+          %li Allow users to upload a photo of themselves.
+          %li Have fun with a playful interface and a great way to see if people are around when you need to chat.
+    .row
+      .left-col
+        %h2.icon.easy Easy to use.
+      .right-col
+        %h2 Easy to use.
+        %ul.checkmarked
+          %li Users don't have to do anything but join your network.
+          %li Quickly and easily swap out graphics to have a nice branded interface.
+          %li Mount the gem in your web app to have a register url for users to submit their name and photo as part of your site.
+          %li Setup is quick and painless.
+          %li Once a user registers their name the same way on all devices you don't see dupliates on the board.
+          %li Avatars are shared so no matter what device joins, as long as the user has registered it with the same name, it will show up for all&nbsp;devices.
+          %li Use your local file system to save uploads by default or provide s3 creds to save it there.
 
-      %p.lead
-        = "Here is a basic middleman app that's setup with Bootstrap-SASS, jQuery,"
-        = link_to "animate.css", "http://daneden.github.io/animate.css/"
-        and 
-        = link_to "socicons", "http://socicon.com"
-        = "."
+%section#why.purple.under
+  .background
+  .container
+    .row
+      .left-col
+        %h1.jumbo Why?
 
-      %p.lead
-        The following middleman components are installed
+      .right-col
+        %h1.text-center-xs.text-center-sm If you are like us, you collaborate with your co-workers a lot and with how busy everyone is, it isn't always easy to figure out who is around.
 
-        %ul
-          %li middleman
-          %li middleman-deploy
-          %li middleman-meta-tags
-          %li middleman-livereload
-          %li middleman-bootstrap-navbar
+        %p Benevolent Gaze provides an easy and interesting way to see who is available in the office. If they are connected to your network they are going to be seen by the Benevolent Gaze. It is as simple as that.
 
+        %h2.text-centered.parenthesized.text-center
+          It should be quick and painless to see who is on your network and who is available to collaborate with.  Benevolent Gaze is your solution! 
 
-        = link_to "Read Middleman Documentation", "http://middlemanapp.com/"
+%section#how.pink.over
+  .background
+  .container
+    .row
+      .left-col
+        %h1.jumbo How?
 
-    .col-sm-6
-      %h2 What's configured
+      .right-col
+        %p First, let's see if this version of Benevolent Gaze will work with your current network setup.  Run the following command from your terminal:
 
-      %p.lead
-        %ul
-          %li Layout and files moved to HAML
-          %li Bootstrap-Sass is included via Sass @import;
-          %li CNAME file gets generated if it exists for github pages subdomaining
-          %li data/site.yml file for default site meta data
-          %li meta_tags is enabled with the auto_meta tagger
-          %li Bootstrap nav bar helpers are actived
-          %li Livereload is on for development
-          %li Asset cleanup is on for build
-          %li Deploy to github pages setup by default
+        %pre="$ ifconfig -a |awk '/broadcast/ { print $2 }' | xargs host"
 
-  .row
-    .col-sm-6
-      %h2 Site meta data
+        %p If it returns something like:
 
-      %pre~"title: \"My Static Site\"\npublisher_twitter: \"@HappyFunCorp\"\ntwitter_id: \"@wschenk\"\n# google_analytics_id:\n"
+        %pre="21.1.168.192.in-addr.arpa domain name pointer Aarons-MBP.home." 
+        
+        %p You can use Benevolent Gaze! If it doesn't return a host name, you will have to wait for a future version of Benevolent Gaze.
 
-      %p
-        Set google_analytics_id for it to show up on a build version of the page.
+        %p Now let's get down to business! 
 
-    .col-sm-6
-      %h2 Example social icons
-      %ul
-        %li
-          %a{ href: "http://twitter.com/HappyFunCorp" }
-            %span.socicon.socicon-twitter.fgcolor
-            = "@HappyFunCorp"
-        %li
-          %a{ href: "http://sublimeguile.com/"}
-            %span.socicon.socicon-tumblr.fgcolor
-            Tumblr
+        %h3 **This version specifically targets the  16:9 aspect ratio**
+        
+        %h2 Install the gem
+
+        %pre="$ gem install benevolent_gaze"
+
+        %h2 Install a couple dependencies.
+
+        %p You will need to install parallel and Redis. If you use Homebrew, it is as easy as:
+
+        %pre="$ brew install parallel"
+        %pre="$ brew install redis"
+
+        %p
+          You will also need to install Foreman.
+        %pre="$ gem install foreman"
+        
+        %p Then in the directory where you want your Benevolent Gaze related things to live (public folder, images etc.) Run the following command:
+
+        %pre="$ benevolent_gaze install wifi_username wifi_password"
+
+        %p This requires two arguments, your wifi username and password so that guests know how to get on your network and be looked on by the Benevolent Gaze. 
+         
+        %p This command creates a folder caled bg_public which contains a Procfile to use with Foreman so that you can start the kiosk and the tracker.  The kiosk is the web UI that lives at localhost:4567.  The tracker is the script that scans your network and reports on who has joined.
+
+        %h2 Get your environment ready.
+
+        %p If you ran the `benevolent_gaze  install` command above, you should now have a Procfile and .env file in your folder.  The Procfile is good to go. The .env file will need populated with relevant information however. Leave the PORT set to 4567.
+
+        %pre="AWS_ACCESS_KEY_ID='_insert_your_aws_access_key_here_'\nAWS_CDN_BUCKET='_insert_your_aws_bucket_here_'\nAWS_SECRET_ACCESS_KEY='_insert_your_aws_secret_access_key_here_'\nBG_COMPANY_URL='http://www.yourcompanywebsite.com/where_you_mounted_the_benevolent_gaze_app'\nPORT=4567"
+
+        %p ***You can use your local file system to save image uploads instead of AWS by just not filling in your AWS creds.  It defaults to saving to your local file system if you haven't supplied any credentials.
+
+        %h2 Add a register url to your site.
+
+        %p If you want users to associate an image and a name other than their device name with their devices you should add the following to your web app that you want to add the registration url to. Add the following to your routes.rb file.
+
+        %pre= "require 'benevolent_gaze/bgapp'\n\nmount BenevolentGaze::BGApp, at: '/register'"
+          
+        %p This works by receiving information from the tracker you have running on your local network.  So when users hit yoursite.com/register they are redirected to where you have the local kiosk running.  Users can now upload a photo, and if they give their same name to all of their devices, they will all be grouped under one avatar.
+
+        %p Animated gifs are supported as well.
+        
+        %h2 Now that you are set up. Let's get it up and running!
+
+        .doc-group
+          .doc-col
+            %h3 Step 1. 
+
+            %p Make sure you have Redis running both locally and on the app where you mounted the application. You will need to set your redistogo url in an environment variable called REDISTOGO_URL on heroku (or wherever you have deployed the app where you mounted the registration endpoint).
+
+            %pre= "$ heroku config:set REDISTOGO_URL=''"
+
+          .doc-col
+            %h3 Step 2. 
+
+            %p Start your local benevolent_gaze instance. Go into your bg_public folder and run:
+
+            %pre= "$ foreman start"
+
+        .doc-group
+          .doc-col
+            %h3 Step 3. 
+            
+            %p Go to localhost:4567 and check out the interface. You should be able to see people on the right hand side of the screen like the screenshot above!
+
+          .doc-col
+            %h3 Step 4.
+
+            %p Enjoy Benevolent Gaze with your friends and fellow colleagues!
+
+        %h2 We also provide a command line tool to help you add users.
+
+        %h3 You can add users one at a time in the following way:
+        
+        %pre="$ benevolent_gaze add_user device name image"
+
+        %p Running the above command using the device name of the users device, their real name and a url to their image will add them to redis and will help them be identified when they join the network.  You would use this if you already had this information.  Remember, they can register themselves as well, if you provide the registration URL mentioned above, or use http://www.happyfuncorp.com/register.
+
+        %h3 You can assign current users without names an image and a real name by using the following command:
+
+        %pre="$ benevolent_gaze assign_users"
+
+        %p This will prompt you for the current users on the network, if any of them do not have a real name or image, it will ask you to provide one.
+
+        %h3 You can bulk assign users using a CSV by using the following command:
+
+        %pre="$ benevolent_gaze bulk_assign yourcsv.csv"
+        
+        %p This expects a csv formatted with the columns device-name, real-name, and image-url.

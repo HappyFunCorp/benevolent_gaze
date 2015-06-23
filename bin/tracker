@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby -wKU
-
-require 'benevolent_gaze/tracker'
-
-BenevolentGaze::Tracker.run!
